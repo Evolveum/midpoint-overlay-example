@@ -19,7 +19,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<name>midPoint Overlay Project</name>
 	<groupId>com.example</groupId>
-	<artifactId>midpoint</artifactId>
+	<artifactId>midpoint-overlay-example</artifactId>
 	<version>3.4-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<description>Example midPoint overlay project</description>
@@ -45,6 +45,10 @@
 	<build>
 		<finalName>midpoint</finalName>
 		<resources>
+			<resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
 			<resource> <!-- We need this to include html files from source tree -->
 				<filtering>false</filtering>
 				<directory>src/main/java</directory>
