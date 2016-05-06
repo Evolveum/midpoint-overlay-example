@@ -19,36 +19,59 @@
 	xmlns:wicket="http://wicket.apache.org">
 <body>
 	<wicket:panel>
+	
 		<div class="row">
-			<div class="col-md-12">		        
-		        <div class="tableForm" >
-
-		            <div class="row header h3-header h3" wicket:id="header"/>
-		            <div class="attributeComponent" wicket:id="body">
-		            	<div class="visible">
-		            		<div class="row" wicket:id="propName"/>
-		            	</div>
-		            	<div class="visible striped">
-		            		<div class="row" wicket:id="propFullName"/>
-		            	</div>
-		            	<div class="visible">
-		            		<div class="row" wicket:id="propSsn"/>
-		            	</div>
+			<div class="col-md-12">        
+		        <div class="container-fluid prism-object" >
+		        
+		        	<div class="row">
+		        		<div class="container-fluid prism-container">
+				            <div class="prism-header">
+				            	<span class="prism-title" wicket:id="header"/>
+				            </div>
+				            <div class="prism-properties" wicket:id="body">
+				            	<div>
+				            		<div class="row prism-property" wicket:id="propName"/>
+				            	</div>
+				            	<div class="stripe">
+				            		<div class="row prism-property" wicket:id="propFullName"/>
+				            	</div>
+				            	<div>
+				            		<div class="row prism-property" wicket:id="propSsn"/>
+				            	</div>
+				            </div>
+			            </div>
 		            </div>
 
-			        <div class="row header h3-header h3">Roles</div>
-			        <div class="row">
-			        	<div class="col-xs-2">Simple roles</div>
-			        	<div class="col-md-10">
-			        		<div wicket:id="rolesSimple"/>
-		        		</div>
-			        </div>
-			        <div class="row">
-			        	<div class="col-xs-2">Domain roles</div>
-			        	<div class="col-md-10">
-			        		<div wicket:id="rolesDomain"/>
-		        		</div>
-			        </div>
+					<div class="row">
+		        		<div class="container-fluid prism-container">
+				            <div class="prism-header">
+				            	<span class="prism-title">Roles</span>
+				            </div>
+				            <div class="prism-properties">
+								<div>
+				            		<div class="row prism-property">
+				            			<div class="col-xs-2 prism-property-label">
+				            				<span>Simple roles</span>
+				            			</div>
+						            	<div class="col-md-10 prism-property-value">
+							        		<div wicket:id="rolesSimple"/>
+						        		</div>
+				            		</div>
+				            	</div>
+								<div class="stripe">
+				            		<div class="row prism-property">
+				            			<div class="col-xs-2 prism-property-label">
+				            				<span>Domain roles</span>
+				            			</div>
+						            	<div class="col-md-10 prism-property-value">
+							        		<div wicket:id="rolesDomain"/>
+						        		</div>
+				            		</div>
+				            	</div>
+				            </div>
+						</div>
+					</div>
 
 		        </div>		        
 			</div>

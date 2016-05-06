@@ -21,6 +21,8 @@ import java.util.List;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 
+import com.evolveum.midpoint.gui.api.model.LoadableModel;
+import com.evolveum.midpoint.gui.api.page.PageBase;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.prism.query.EqualFilter;
@@ -40,12 +42,11 @@ import com.evolveum.midpoint.web.component.assignment.SimpleRoleSelector;
 import com.evolveum.midpoint.web.component.form.Form;
 import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.component.prism.ObjectWrapper;
-import com.evolveum.midpoint.web.model.LoadableModel;
-import com.evolveum.midpoint.web.page.PageBase;
-import com.evolveum.midpoint.web.page.admin.users.dto.FocusProjectionDto;
+import com.evolveum.midpoint.web.page.admin.users.dto.FocusSubwrapperDto;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.FocusType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.RoleType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.ShadowType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.UserType;
 import com.example.midpoint.schema.ExampleSchemaConstants;
 
@@ -57,7 +58,8 @@ import com.example.midpoint.schema.ExampleSchemaConstants;
  *
  */
 public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocusTabPanel<F> {
-	
+	private static final long serialVersionUID = 1L;
+
 	private static final String DOT_CLASS = ExtendedFormFocusTabPanel.class.getName() + ".";
 	private static final String OPERATION_SEARCH_ROLES = DOT_CLASS + "searchRoles";
 	
@@ -75,7 +77,7 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 	public ExtendedFormFocusTabPanel(String id, Form mainForm, 
 			LoadableModel<ObjectWrapper<F>> focusWrapperModel, 
 			LoadableModel<List<AssignmentEditorDto>> assignmentsModel, 
-			LoadableModel<List<FocusProjectionDto>> projectionModel,
+			LoadableModel<List<FocusSubwrapperDto<ShadowType>>> projectionModel,
 			PageBase pageBase) {
 		super(id, mainForm, focusWrapperModel, assignmentsModel, projectionModel, pageBase);
 		initLayout(focusWrapperModel, assignmentsModel, pageBase);
