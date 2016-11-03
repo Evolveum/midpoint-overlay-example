@@ -27,6 +27,7 @@ import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.prism.query.EqualFilter;
 import com.evolveum.midpoint.prism.query.ObjectQuery;
+import com.evolveum.midpoint.prism.query.builder.QueryBuilder;
 import com.evolveum.midpoint.task.api.Task;
 import com.evolveum.midpoint.util.exception.CommunicationException;
 import com.evolveum.midpoint.util.exception.ConfigurationException;
@@ -46,6 +47,7 @@ import com.evolveum.midpoint.web.page.admin.users.dto.FocusSubwrapperDto;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.FocusType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.RoleType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.ServiceType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ShadowType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.UserType;
 import com.example.midpoint.schema.ExampleSchemaConstants;
@@ -96,22 +98,24 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 		Task task = pageBase.createSimpleTask(OPERATION_SEARCH_ROLES);
 		List<PrismObject<RoleType>> availableSimpleRoles;
 		try {
-			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
-					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_SIMPLE));
+			ObjectQuery simpleRoleQuery = QueryBuilder.queryFor(RoleType.class, getPrismContext()).item(RoleType.F_ROLE_TYPE).eq(ExampleSchemaConstants.ROLE_TYPE_SIMPLE).build();
+//			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
+//					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_SIMPLE));
 			availableSimpleRoles = pageBase.getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
 		} catch (SchemaException | ObjectNotFoundException | SecurityViolationException | CommunicationException | ConfigurationException e) {
 			task.getResult().recordFatalError(e);
 			LoggingUtils.logException(LOGGER, "Couldn't load roles", e);
 			availableSimpleRoles = new ArrayList<>();
 			// TODO: better errror reporting
-		}
+		}				
 		
 		add(new SimpleRoleSelector<F,RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
 		
 		List<PrismObject<RoleType>> availableDomainRoles;
 		try {
-			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
-					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_DOMAIN));
+			ObjectQuery simpleRoleQuery = QueryBuilder.queryFor(RoleType.class, getPrismContext()).item(RoleType.F_ROLE_TYPE).eq(ExampleSchemaConstants.ROLE_TYPE_DOMAIN).build();
+//			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
+//					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_DOMAIN));
 			availableDomainRoles = pageBase.getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
 		} catch (SchemaException | ObjectNotFoundException | SecurityViolationException | CommunicationException | ConfigurationException e) {
 			task.getResult().recordFatalError(e);
