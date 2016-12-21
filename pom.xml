@@ -20,7 +20,7 @@
 	<name>midPoint Overlay Project</name>
 	<groupId>com.example</groupId>
 	<artifactId>midpoint-overlay-example</artifactId>
-	<version>3.5</version>
+	<version>3.6-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<description>Example midPoint overlay project</description>
 
@@ -87,14 +87,14 @@
 		<dependency>
 			<groupId>com.evolveum.midpoint.gui</groupId>
 			<artifactId>admin-gui</artifactId>
-			<version>3.5</version>
+			<version>3.6-SNAPSHOT</version>
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.evolveum.midpoint.gui</groupId>
 			<artifactId>admin-gui</artifactId>
-			<version>3.5</version>
+			<version>3.6-SNAPSHOT</version>
 			<type>jar</type>
 			<classifier>classes</classifier>
 			<scope>compile</scope>
