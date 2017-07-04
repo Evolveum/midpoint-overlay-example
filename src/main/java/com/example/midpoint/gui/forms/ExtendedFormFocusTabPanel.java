@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 Evolveum
+ * Copyright (c) 2016-2017 Evolveum
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 //			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
 //					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_SIMPLE));
 			availableSimpleRoles = pageBase.getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
-		} catch (SchemaException | ObjectNotFoundException | SecurityViolationException | CommunicationException | ConfigurationException e) {
+		} catch (Throwable e) {
 			task.getResult().recordFatalError(e);
 			LoggingUtils.logException(LOGGER, "Couldn't load roles", e);
 			availableSimpleRoles = new ArrayList<>();
@@ -117,7 +117,7 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 //			ObjectQuery simpleRoleQuery = ObjectQuery.createObjectQuery(
 //					EqualFilter.createEqual(RoleType.F_ROLE_TYPE, RoleType.class, getPrismContext(), ExampleSchemaConstants.ROLE_TYPE_DOMAIN));
 			availableDomainRoles = pageBase.getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
-		} catch (SchemaException | ObjectNotFoundException | SecurityViolationException | CommunicationException | ConfigurationException e) {
+		} catch (Throwable e) {
 			task.getResult().recordFatalError(e);
 			LoggingUtils.logException(LOGGER, "Couldn't load roles", e);
 			availableDomainRoles = new ArrayList<>();
