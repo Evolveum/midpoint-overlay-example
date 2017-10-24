@@ -40,21 +40,52 @@
 	<properties>
 		<project.source.version>1.8</project.source.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<spring.boot.version>1.5.7.RELEASE</spring.boot.version>
 	</properties>
 
 	<build>
 		<finalName>midpoint</finalName>
 		<resources>
 			<resource>
-                <filtering>false</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-			<resource> <!-- We need this to include html files from source tree -->
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/org.identityconnectors.common.logging</exclude>
+				</excludes>
+			</resource>
+			<!-- LOCALIZATION -->
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>localization/Midpoint*.properties</include>
+					<include>banner.txt</include>
+				</includes>
+			</resource>
+			<!--  ICF LOGGING CONFIGURATION -->
+			<resource>
+				<targetPath>../midpoint/META-INF/services</targetPath>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/org.identityconnectors.common.logging</include>
+				</includes>
+			</resource>
+			<resource>
 				<filtering>false</filtering>
 				<directory>src/main/java</directory>
 				<excludes>
 					<exclude>**/*.java</exclude>
+					<exclude>**/*.properties</exclude>
 				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
 			</resource>
 		</resources>
 		<plugins>
@@ -78,7 +109,20 @@
 							<artifactId>admin-gui</artifactId>
 						</overlay>
 					</overlays>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
