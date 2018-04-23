@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2017 Evolveum
+ * Copyright (c) 2016-2018 Evolveum
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import com.evolveum.midpoint.web.component.form.Form;
 import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.component.prism.ContainerValueWrapper;
 import com.evolveum.midpoint.web.component.prism.ObjectWrapper;
+import com.evolveum.midpoint.web.model.ContainerWrapperFromObjectWrapperModel;
 import com.evolveum.midpoint.web.page.admin.users.dto.FocusSubwrapperDto;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.*;
 import com.example.midpoint.schema.ExampleSchemaConstants;
@@ -65,14 +66,13 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 
     public ExtendedFormFocusTabPanel(String id, Form mainForm,
                                      LoadableModel<ObjectWrapper<F>> focusWrapperModel,
-                                     IModel<List<ContainerValueWrapper<AssignmentType>>> assignmentsModel,
                                      LoadableModel<List<FocusSubwrapperDto<ShadowType>>> projectionModel,
                                      PageBase pageBase) {
         super(id, mainForm, focusWrapperModel, projectionModel, pageBase);
-        initLayout(focusWrapperModel, assignmentsModel, pageBase);
+        initLayout(focusWrapperModel, pageBase);
     }
 
-    private void initLayout(final LoadableModel<ObjectWrapper<F>> focusModel, IModel<List<ContainerValueWrapper<AssignmentType>>> assignmentsModel, PageBase pageBase) {
+    private void initLayout(final LoadableModel<ObjectWrapper<F>> focusModel, PageBase pageBase) {
         add(new Label(ID_HEADER, "Object details"));
         WebMarkupContainer body = new WebMarkupContainer("body");
         add(body);
@@ -96,6 +96,7 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
             // TODO: better errror reporting
         }
 
-        add(new SimpleRoleSelector<F, RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
+        ContainerWrapperFromObjectWrapperModel<AssignmentType, F> assignmentsModel = new ContainerWrapperFromObjectWrapperModel<>(focusModel, new ItemPath(FocusType.F_ASSIGNMENT));
+		add(new SimpleRoleSelector<F, RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
     }
 }
