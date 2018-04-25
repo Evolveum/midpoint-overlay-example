@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2016 Evolveum
+  ~ Copyright (c) 2016-2018 Evolveum
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,6 +28,13 @@
                 <formSpecification>
                     <title>Custom</title>
                     <panelClass>com.example.midpoint.gui.forms.ExtendedFormFocusTabPanel</panelClass>
+                </formSpecification>
+            </objectForm>
+            <objectForm>
+                <type>OrgType</type>
+                <formSpecification>
+                    <title>Transform</title>
+                    <panelClass>com.example.midpoint.gui.forms.ConfigurationTableTabPanel</panelClass>
                 </formSpecification>
             </objectForm>
         </objectForms>

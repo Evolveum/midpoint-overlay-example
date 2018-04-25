@@ -1,0 +1,41 @@
+<!--
+  ~ Copyright (c) 2018 Evolveum
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<org oid="4a5adbe4-4705-11e8-9439-9f51229dce12"
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
+        xmlns:t="http://prism.evolveum.com/xml/ns/public/types-3"
+        xmlns:e="http://example.com/xml/ns/midpoint/schema/extension-3">
+    <name>Alpha</name>
+    <extension>
+    	<e:transformationEnabled>true</e:transformationEnabled>
+    	<e:transform>
+    		<e:pattern>A</e:pattern>
+    		<e:replacement>alpha</e:replacement>
+    	</e:transform>
+    	<e:transform>
+    		<e:pattern>B</e:pattern>
+    		<e:replacement>bravo</e:replacement>
+    	</e:transform>
+    	<e:transform>
+    		<e:pattern>C</e:pattern>
+    		<e:replacement>charlie</e:replacement>
+    	</e:transform>
+    </extension>
+    <assignment>
+    	<targetRef oid="258cfacc-4705-11e8-b772-874c20402410" type="OrgType"/>
+    </assignment>
+</org>
