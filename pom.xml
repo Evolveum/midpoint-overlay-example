@@ -14,14 +14,20 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
-	<name>midPoint Overlay Project</name>
+
 	<groupId>com.example</groupId>
 	<artifactId>midpoint-overlay-example</artifactId>
 	<version>3.9-SNAPSHOT</version>
+
 	<packaging>war</packaging>
+
+	<name>midPoint Overlay Project</name>
+
 	<description>Example midPoint overlay project</description>
 
 	<repositories>
@@ -51,10 +57,13 @@
 	</pluginRepositories>
 
 	<properties>
-		<project.source.version>1.8</project.source.version>
+		<java.version>1.8</java.version>
+		<project.source.version>${java.version}</project.source.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<spring.boot.version>1.5.7.RELEASE</spring.boot.version>
+		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+
+		<midpoint.version>3.9-SNAPSHOT</midpoint.version>
 	</properties>
 
 	<build>
@@ -105,16 +114,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.2.2</version>
 				<configuration>
 					<overlays>
 						<overlay>
@@ -123,46 +132,102 @@
 						</overlay>
 					</overlays>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<packagingExcludes>WEB-INF/lib/admin-gui-*-classes.jar,WEB-INF/lib/javax.annotation-api-*.jar</packagingExcludes>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${spring.boot.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>com.evolveum.midpoint</groupId>
-						<artifactId>midpoint-war-layout</artifactId>
-						<version>3.9-SNAPSHOT</version>
-					</dependency>
-				</dependencies>
+				<configuration>
+					<fork>true</fork>
+					<skip>false</skip>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
 							<goal>repackage</goal>
 						</goals>
+						<configuration>
+							<layoutFactory implementation="com.evolveum.midpoint.tools.layout.MidPointWarLayoutFactory"/>
+							<excludes>
+								<exclude>
+									<groupId>com.evolveum.midpoint.gui</groupId>
+									<artifactId>admin-gui</artifactId>
+								</exclude>
+								<exclude>
+									<groupId>javax.annotation</groupId>
+									<artifactId>javax.annotation-api</artifactId>
+								</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.evolveum.midpoint</groupId>
+						<artifactId>midpoint-war-layout</artifactId>
+						<version>${midpoint.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from MidPoint -->
+				<groupId>com.evolveum.midpoint</groupId>
+				<artifactId>parent</artifactId>
+				<version>${midpoint.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.evolveum.midpoint.gui</groupId>
 			<artifactId>admin-gui</artifactId>
-			<version>3.9-SNAPSHOT</version>
+			<version>${midpoint.version}</version>
 			<type>war</type>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.evolveum.midpoint.gui</groupId>
 			<artifactId>admin-gui</artifactId>
-			<version>3.9-SNAPSHOT</version>
+			<version>${midpoint.version}</version>
 			<type>jar</type>
 			<classifier>classes</classifier>
-			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-annotations-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
 	</dependencies>
 
 </project>
