@@ -22,7 +22,7 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>midpoint-overlay-example</artifactId>
-	<version>3.9-SNAPSHOT</version>
+	<version>3.9</version>
 
 	<packaging>war</packaging>
 
@@ -63,7 +63,7 @@
 
 		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
 
-		<midpoint.version>3.9-SNAPSHOT</midpoint.version>
+		<midpoint.version>3.9</midpoint.version>
 	</properties>
 
 	<build>
