@@ -21,45 +21,54 @@
 	<wicket:panel>
 	
 		<div class="row">
-			<div class="col-md-12">        
-		        <div class="container-fluid prism-object" >
-		        
-		        	<div class="row">
-		        		<div class="container-fluid prism-container">
-				            <div class="prism-header">
-				            	<span class="prism-title" wicket:id="header"/>
-				            </div>
-				            <div class="prism-properties" wicket:id="body">
-				            	<div>
-				            		<div class="row prism-property" wicket:id="propName"/>
-				            	</div>
-				            	<div class="stripe">
-				            		<div class="row prism-property" wicket:id="propFullName"/>
-				            	</div>
-				            	<div>
-				            		<div class="row prism-property" wicket:id="propSsn"/>
-				            	</div>
-				            </div>
+			<div class="col-md-12">
+		        <div class="top-level-prism-container" >
+                    <div class="container-wrapper">
+                        <div>
+                            <div style="width:100%" class="">
+
+                                <div class="row prism-header">
+                                    <div class="labelContainer">
+                                        <div class="prism-title" wicket:id="header"/>
+                                    </div>
+                                </div>
+                                <div class="prism-properties" wicket:id="body">
+                                    <div class="stripe">
+                                        <div class="row prism-property" wicket:id="propName"/>
+                                    </div>
+                                    <div>
+                                        <div class="row prism-property" wicket:id="propFullName"/>
+                                    </div>
+                                    <div class="stripe">
+                                        <div class="row prism-property" wicket:id="propSsn"/>
+                                    </div>
+                                </div>
+                            </div>
 			            </div>
 		            </div>
 
-					<div class="row">
-		        		<div class="container-fluid prism-container">
-				            <div class="prism-header">
-				            	<span class="prism-title">Roles</span>
-				            </div>
-				            <div class="prism-properties">
-								<div>
-				            		<div class="row prism-property">
-				            			<div class="col-xs-2 prism-property-label">
-				            				<span>Simple roles</span>
-				            			</div>
-						            	<div class="col-md-10 prism-property-value">
-							        		<div wicket:id="rolesSimple"/>
-						        		</div>
-				            		</div>
-				            	</div>
-				            </div>
+                    <div class="container-wrapper">
+                        <div>
+                            <div style="width:100%" class="">
+
+                                <div class="row prism-header">
+                                    <div class="labelContainer">
+                                        <span class="prism-title">Roles</span>
+                                    </div>
+                                </div>
+                                <div class="prism-properties">
+                                    <div>
+                                        <div class="row prism-property">
+                                            <div class="col-xs-2 prism-property-label">
+                                                <span>Simple roles</span>
+                                            </div>
+                                            <div class="col-md-10 prism-property-value">
+                                                <div wicket:id="rolesSimple"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 						</div>
 					</div>
 

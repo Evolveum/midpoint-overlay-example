@@ -15,6 +15,9 @@
  */
 package com.example.midpoint.schema;
 
+import com.evolveum.midpoint.prism.path.ItemPath;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
+
 import javax.xml.namespace.QName;
 
 /**
@@ -33,7 +36,9 @@ public class ExampleSchemaConstants {
 	public static final QName SCHEMA_EXTENSION_TRANSFORM = new QName(NS_SCHEMA_EXTENSION, "transform");
 	public static final QName SCHEMA_EXTENSION_TRANSFORM_PATTERN = new QName(NS_SCHEMA_EXTENSION, "pattern");
 	public static final QName SCHEMA_EXTENSION_TRANSFORM_REPLACEMENT = new QName(NS_SCHEMA_EXTENSION, "replacement");
-	
+
+	public static final ItemPath PATH_EXTENSION_TRANSFORM= ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM);
+
 	public static final String ROLE_TYPE_SIMPLE = "simple";
 	public static final String ROLE_TYPE_DOMAIN = "domain";
 }

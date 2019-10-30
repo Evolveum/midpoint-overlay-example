@@ -21,66 +21,80 @@
 	<wicket:panel>
 	
 		<div class="row">
-			<div class="col-md-12">        
-		        <div class="container-fluid prism-object" >
-		        
-		        	<div class="row">
-		        		<div class="container-fluid prism-container">
-				            <div class="prism-header">
-				            	<span class="prism-title">Transform configuration</span>
-				            </div>
-				            <div class="prism-properties">
-				            	<div>
-				            		<div class="row prism-property" wicket:id="transformDescription"/>
-				            		
-				            		<div class="row prism-property" id="idc1e">
-    									<div class="col-xs-2 prism-property-label">
-        									<span style="text-decoration: none;">Enabled</span>
-	    								</div>
-    									<div class="col-md-10 prism-property-value">
-        									<div>
-    											<div class="row">
-        											<div class="col-xs-10">
-    													<input type="checkbox" wicket:id="transformationEnabled"/>
-													</div>
-    											</div>
-											</div>
-    									</div>
-									</div>
-				            	</div>
+			<div class="col-md-12">
+                <div class="top-level-prism-container" >
+                    <div class="container-wrapper">
+                        <div>
+                            <div style="width:100%" class="">
+                                <div class="row prism-header">
+                                    <div class="labelContainer">
+                                        <span class="prism-title">Transform configuration</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="prism-properties">
+                                    <div>
+                                        <div class="stripe">
+                                            <div class="row prism-property" wicket:id="transformDescription"/>
+                                        </div>
+                                        <div class="row prism-property">
+                                            <div class="col-xs-2 prism-property-label">
+                                                <span style="text-decoration: none;">Enabled</span>
+                                            </div>
+                                            <div class="col-md-10 prism-property-value">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-xs-10">
+                                                            <input type="checkbox" wicket:id="transformationEnabled"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 				            </div>
 			            </div>
 		            </div>
 
 					<div class="row">
-		        		<div class="container-fluid prism-container">
-				            <div class="prism-header">
-				            	<span class="prism-title">Transform table</span>
-				            </div>
-				            <div class="prism-properties">
-				            	<div>
-						            <table class="table no-margin">
-						            	<thead>
-						            		<tr>
-						            			<th>Pattern</th>
-						            			<th>Replacement</th>
-						            		</tr>
-					            		</thead>
-					            		<tbody>
-					            			<tr wicket:id="transformTableRow">
-					            				<td wicket:id="transformPattern">pattern</td>
-					            				<td wicket:id="transformReplacement">replacement</td>
-					            			</tr>
-					            		</tbody>
-						            </table>
-						        </div>
-						        <div>
-						        	<a wicket:id="addTransform">Add new</a>
+                        <div class="container-wrapper">
+                            <div>
+                                <div style="width:100%" class="">
+                                    <div class="row prism-header">
+                                        <div class="pull-left">
+                                            <div class="labelContainer">
+                                                <span class="prism-title">Transform table</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prism-properties">
+                                        <div>
+                                            <table class="table no-margin">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pattern</th>
+                                                        <th>Replacement</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr wicket:id="transformTableRow">
+                                                        <td wicket:id="transformPattern">pattern</td>
+                                                        <td wicket:id="transformReplacement">replacement</td>
+                                                        <span wicket:id="feedback"/>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <a wicket:id="addTransform">Add new</a>
+                                        </div>
+					                 </div>
 						        </div>
 					        </div>
-						</div>
-					</div>
-
+                        </div>
+                    </div>
 		        </div>		        
 			</div>
 		</div>
