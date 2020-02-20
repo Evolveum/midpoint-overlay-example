@@ -179,7 +179,7 @@
 			<dependency>
 				<!-- Import dependency management from MidPoint -->
 				<groupId>com.evolveum.midpoint</groupId>
-				<artifactId>parent</artifactId>
+				<artifactId>midpoint</artifactId>
 				<version>${midpoint.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
