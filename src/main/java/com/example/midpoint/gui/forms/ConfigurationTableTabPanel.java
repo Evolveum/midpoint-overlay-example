@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016-2018 Evolveum
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +15,22 @@
  */
 package com.example.midpoint.gui.forms;
 
+import java.util.List;
+import javax.xml.namespace.QName;
+
+import com.example.midpoint.schema.ExampleSchemaConstants;
+import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+
 import com.evolveum.midpoint.gui.api.factory.GuiComponentFactory;
 import com.evolveum.midpoint.gui.api.model.LoadableModel;
-import com.evolveum.midpoint.gui.api.page.PageBase;
 import com.evolveum.midpoint.gui.api.prism.PrismContainerWrapper;
 import com.evolveum.midpoint.gui.api.prism.PrismObjectWrapper;
 import com.evolveum.midpoint.gui.api.prism.ShadowWrapper;
@@ -41,19 +54,6 @@ import com.evolveum.midpoint.web.model.PrismContainerWrapperModel;
 import com.evolveum.midpoint.web.model.PrismPropertyWrapperModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.FocusType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
-import com.example.midpoint.schema.ExampleSchemaConstants;
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
-
-import javax.xml.namespace.QName;
-import java.util.List;
 
 /**
  * Sample showing a custom focus form that displays configuration parameters formatted in a table.
@@ -74,92 +74,92 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
 
     private static final transient Trace LOGGER = TraceManager.getTrace(ConfigurationTableTabPanel.class);
 
-    public ConfigurationTableTabPanel(String id, Form mainForm,
-									  LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
-									  LoadableModel<List<ShadowWrapper>> projectionModel) {
+    public ConfigurationTableTabPanel(String id, Form<PrismObjectWrapper<F>> mainForm,
+            LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
+            LoadableModel<List<ShadowWrapper>> projectionModel) {
         super(id, mainForm, focusWrapperModel, projectionModel);
     }
 
     @Override
-	protected void onInitialize() {
-    	super.onInitialize();
-    	initLayout();
+    protected void onInitialize() {
+        super.onInitialize();
+        initLayout();
     }
-    
+
     private void initLayout() {
-    	setOutputMarkupId(true);
-    	
-    	// This is absolutely ordinary field. MidPoint GUI code will choose appropriate input for the field.
+        setOutputMarkupId(true);
+
+        // This is absolutely ordinary field. MidPoint GUI code will choose appropriate input for the field.
         addPrismPropertyPanel(this, ID_TRANSFORM_DESCRIPTION, DOMUtil.XSD_STRING,
-        		ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_DESCRIPTION));
-        
+                ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_DESCRIPTION));
+
         // This is is an example of using custom Wicket component to handle a property.
-		PrismPropertyWrapperModel<F, Boolean> transformationEnabledPropertyWrapperModel = PrismPropertyWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORMATION_ENABLED));
+        PrismPropertyWrapperModel<F, Boolean> transformationEnabledPropertyWrapperModel = PrismPropertyWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORMATION_ENABLED));
 
-
-		IModel<PrismPropertyValueWrapper<Boolean>> transformationEnabledPropertyValueWrapperModel = new PropertyModel<>(transformationEnabledPropertyWrapperModel, "value");
-		ItemRealValueModel<Boolean> checkboxModel = new ItemRealValueModel<Boolean>(transformationEnabledPropertyValueWrapperModel);
+        IModel<PrismPropertyValueWrapper<Boolean>> transformationEnabledPropertyValueWrapperModel = new PropertyModel<>(transformationEnabledPropertyWrapperModel, "value");
+        ItemRealValueModel<Boolean> checkboxModel = new ItemRealValueModel<>(transformationEnabledPropertyValueWrapperModel);
         CheckBox checkbox = new CheckBox(ID_TRANSFORMATION_ENABLED, checkboxModel);
-		this.add(checkbox);
-        
+        this.add(checkbox);
+
         // Following code sets up a table of pattern/replacement transforms
-		PrismContainerWrapperModel transformWrapperModel = PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
+        PrismContainerWrapperModel<?, ?> transformWrapperModel = PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
 
         final ListView<PrismContainerValueWrapper<Containerable>> table = new ListView<PrismContainerValueWrapper<Containerable>>(ID_TRANSFORM_TABLE_ROW, new PropertyModel<>(transformWrapperModel, "values")) {
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected void populateItem(ListItem<PrismContainerValueWrapper<Containerable>> item) {
+            @Override
+            protected void populateItem(ListItem<PrismContainerValueWrapper<Containerable>> item) {
                 // feedback
                 FeedbackAlerts feedback = new FeedbackAlerts(ID_FEEDBACK);
                 feedback.setOutputMarkupId(true);
                 item.add(feedback);
 
-				item.add(createTransformTableItem(ID_TRANSFORM_TABLE_PATTERN, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_PATTERN));
-				item.add(createTransformTableItem(ID_TRANSFORM_TABLE_REPLACEMENT, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_REPLACEMENT));
-			}
-        	
+                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_PATTERN, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_PATTERN));
+                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_REPLACEMENT, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_REPLACEMENT));
+            }
+
         };
         add(table);
-        
+
         AjaxLink<PrismObjectWrapper<F>> addButton = new AjaxLink<PrismObjectWrapper<F>>(ID_ADD_TRANSFORM, getObjectWrapperModel()) {
 
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				PrismObjectWrapper<F> objectWrapper = getObjectWrapperModel().getObject();
-				PrismContainerWrapper<Containerable> transformWrapper = null;
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                PrismObjectWrapper<F> objectWrapper = getObjectWrapperModel().getObject();
 
-
-				try {
-					transformWrapper = objectWrapper.findContainer(ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
-				} catch (SchemaException e) {
-					LoggingUtils.logException(LOGGER, "Cannot find container " + ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM + " in " + getObjectWrapper(), e);
+                try {
+                    PrismContainerWrapper<Containerable> transformWrapper =
+                            objectWrapper.findContainer(ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
+                    WebPrismUtil.createNewValueWrapper(
+                            transformWrapper, transformWrapper.getItem().createNewValue(), getPageBase(), target);
+                } catch (SchemaException e) {
+                    LoggingUtils.logException(LOGGER, "Cannot find container " + ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM + " in " + getObjectWrapper(), e);
                     target.add(ConfigurationTableTabPanel.this);
                     return;
-				}
-				WebPrismUtil.createNewValueWrapper(transformWrapper, transformWrapper.getItem().createNewValue(), getPageBase(), target);
-				target.add(ConfigurationTableTabPanel.this);
-			}
-		};
-		add(addButton);
-        
+                }
+                target.add(ConfigurationTableTabPanel.this);
+            }
+        };
+        add(addButton);
+
     }
-    
-    private Component createTransformTableItem(String id, IModel<PrismContainerValueWrapper<Containerable>> itemModel, QName tableElementQName) {
-		PrismPropertyWrapperModel<Containerable, ?> propertyModel = PrismPropertyWrapperModel.fromContainerValueWrapper(itemModel, ItemName.fromQName(tableElementQName));
-		GuiComponentFactory valuePanelFactory = getPageBase().getRegistry().findValuePanelFactory(propertyModel.getObject());
-		if (valuePanelFactory == null) {
-			return new Label(id, createStringResource("Cannot create component for " + tableElementQName));
-		}
 
+    private Component createTransformTableItem(String id,
+            IModel<PrismContainerValueWrapper<Containerable>> itemModel, QName tableElementQName) {
+        PrismPropertyWrapperModel<Containerable, ?> propertyModel =
+                PrismPropertyWrapperModel.fromContainerValueWrapper(
+                        itemModel, ItemName.fromQName(tableElementQName));
+        GuiComponentFactory valuePanelFactory =
+                getPageBase().getRegistry().findValuePanelFactory(propertyModel.getObject());
+        if (valuePanelFactory == null) {
+            return new Label(id, createStringResource("Cannot create component for " + tableElementQName));
+        }
 
-		PrismPropertyPanelContext ctx = new PrismPropertyPanelContext(propertyModel);
-		ctx.setComponentId(id);
-		ctx.setForm(getMainForm());
-		ctx.setParentComponent(this);
-		ctx.setRealValueModel(new PropertyModel<>(propertyModel, "value"));
-		return valuePanelFactory.createPanel(ctx);
-
-	}
-    
+        PrismPropertyPanelContext<?> ctx = new PrismPropertyPanelContext<>(propertyModel);
+        ctx.setComponentId(id);
+        ctx.setForm(getMainForm());
+        ctx.setParentComponent(this);
+        ctx.setRealValueModel(new PropertyModel<>(propertyModel, "value"));
+        return valuePanelFactory.createPanel(ctx);
+    }
 }

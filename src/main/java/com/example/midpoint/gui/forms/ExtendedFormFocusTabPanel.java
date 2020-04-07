@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2016-2018 Evolveum
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,14 @@
  */
 package com.example.midpoint.gui.forms;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.midpoint.schema.ExampleSchemaConstants;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+
 import com.evolveum.midpoint.gui.api.model.LoadableModel;
-import com.evolveum.midpoint.gui.api.page.PageBase;
 import com.evolveum.midpoint.gui.api.prism.PrismObjectWrapper;
 import com.evolveum.midpoint.gui.api.prism.ShadowWrapper;
 import com.evolveum.midpoint.prism.PrismObject;
@@ -36,12 +42,6 @@ import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.RoleType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.UserType;
 import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
-import com.example.midpoint.schema.ExampleSchemaConstants;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Sample showing a custom focus form that displays semi-static form.
@@ -67,8 +67,8 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
     private static final Trace LOGGER = TraceManager.getTrace(ExtendedFormFocusTabPanel.class);
 
     public ExtendedFormFocusTabPanel(String id, Form mainForm,
-                                     LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
-                                     LoadableModel<List<ShadowWrapper>> projectionModel) {
+            LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
+            LoadableModel<List<ShadowWrapper>> projectionModel) {
         super(id, mainForm, focusWrapperModel, projectionModel);
     }
 
@@ -103,6 +103,6 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 
         PrismContainerWrapperModel assignmentsModel = PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), FocusType.F_ASSIGNMENT);
 
-		add(new SimpleRoleSelector<F, RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
+        add(new SimpleRoleSelector<F, RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
     }
 }
