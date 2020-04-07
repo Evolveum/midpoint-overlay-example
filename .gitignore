@@ -21,3 +21,6 @@ hs_err_pid*
 *.iml
 
 overlays
+
+# midpoint.home* created in the project
+midpoint.home*/
