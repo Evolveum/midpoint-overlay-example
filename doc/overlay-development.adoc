@@ -1,0 +1,30 @@
+= midPoint Overlay development
+
+TODO:
+
+* version info table
+* IDEA development
+
+== Schema extension and initial objects
+
+Overlay can add both
+https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension]
+and custom initial objects.
+
+To include schema extensions, create `initial-midpoint-home/schema` under `main/java/resources`.
+The whole structure will be extracted under `${midpoint.home}/schema` and all `*.xsd` files will be processed as schema extensions.
+
+Additionally, any resource (file) placed under `initial-objects` will be parsed as object during Midpoint startup.
+These objects are meant to be read only once, during the first startup they are discovered.
+Recommendations for custom initial objects are:
+
+* Place each object in a separate XML file.
+* The files have to be named following the `9xx-nnnnnnnn.xml` convention, where `xx` is any number
+and `nnnnnnnn` is object name (see the sample project for an example).
+The files will be imported in the order given by the `xx` numbers.
+* The prefix `9` is a convention to avoid collisions with stock initial objects.
+* Don't forget the OID as it is used to avoid repeated object import on each restart.
+
+Custom `initial-objects` are part of the initial object import and happens before so called
+https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import] of objects
+placed under `${midpoint.home}/post-initial-objects`.

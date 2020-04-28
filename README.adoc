@@ -1,0 +1,82 @@
+= midPoint Overlay Example
+
+MidPoint overlays allow to heavily customize midPoint without the need to modify midPoint source code.
+This example serves two purposes:
+
+* to showcase simple GUI customization with a couple of new forms;
+* to be the canonical example for overlays, documenting the changes between versions, etc.
+
+This example is described in this README below.
+
+Following generic overlay points are documented in separate documents in this project:
+
+* link:doc/overlay-development.adoc[Overlay development]
+
+Other overlay examples:
+
+* https://github.com/Evolveum/midpoint-custom-service[Custom SOAP service]
+* https://github.com/Evolveum/midpoint-custom-rest-service[Custom REST service]
+
+Additional information about midPoint customizations with overlays are also available at
+https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[this documentation page].
+
+== Recent overlay changes
+
+During development of midPoint 4.1, following Maven artifact coordinates were changed:
+
+* Parent POM `com.evolveum.midpoint:parent` was removed and replaced by `com.evolveum.midpoint:midpoint`.
+* `com.evolveum.midpoint:midpoint-war-layout` was changed to `com.evolveum.midpoint.tools:midpoint-war-layout`.
+
+Further, *JDK 11 is now used for overlays* just as recommended for midPoint.
+
+== This overlay example
+
+To build this example use JDK 11 and run (in the root of the repository):
+----
+mvn clean package
+java -jar target/midpoint.war
+----
+
+Wait until the midPoint starts - you can check the progress in another terminal with:
+----
+tail -f ~/midpoint/log/midpoint.log
+----
+
+To see the customized forms:
+
+* In your browser open: http://localhost:8080
+* Log in as user `operator` with password `5ecr3t`.
+* Try to edit any user or just click http://localhost:8080/midpoint/self/profile/user[Profile].
+
+You will see the completely customized form (implemented in `ExtendedFormFocusTabPanel`):
+
+image::doc/img/custom-form-user.png[]
+
+There is also the custom form for editing an organization (class ``):
+
+image::doc/img/custom-form-org.png[]
+
+=== Schema extension and initial objects
+
+This overlay demonstrates usage of both
+https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension]
+and custom initial objects.
+
+For details see the respective section in link:doc/overlay-development.adoc[Overlay development].
+
+To include schema extensions, create `initial-midpoint-home/schema` under `main/java/resources`.
+The whole structure will be extracted under `${midpoint.home}/schema` and all `*.xsd` files will be processed as schema extensions.
+
+Additionally, any resource (file) placed under `initial-objects` will be parsed as object during Midpoint startup.
+Recommendations for custom initial objects are:
+
+* Place each object in a separate XML file.
+* The files have to be named following the `9xx-nnnnnnnn.xml` convention, where `xx` is any number
+and `nnnnnnnn` is object name (see the sample project for an example).
+The files will be imported in the order given by the `xx` numbers.
+* The prefix `9` is a convention to avoid collisions with stock initial objects.
+* Don't forget the OID as it is used to avoid repeated object import on each restart.
+
+Custom `initial-objects` are part of the initial object import and happens before so called
+https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import] of objects
+placed under `${midpoint.home}/post-initial-objects`.
