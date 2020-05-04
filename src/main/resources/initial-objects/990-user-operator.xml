@@ -14,34 +14,30 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<user oid="74d3dbce-bbab-11e5-be4c-1bfc05efa4c8" 
-		xmlns='http://midpoint.evolveum.com/xml/ns/public/common/common-3'
-		xmlns:c='http://midpoint.evolveum.com/xml/ns/public/common/common-3'
-		xmlns:t='http://prism.evolveum.com/xml/ns/public/types-3'
-		xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-		xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
-	<name>operator</name>
+<user oid="74d3dbce-bbab-11e5-be4c-1bfc05efa4c8"
+        xmlns='http://midpoint.evolveum.com/xml/ns/public/common/common-3'>
 
-	<assignment>
-		<!-- Superoperator -->
-		<targetRef oid="2832f29c-bbaa-11e5-ac70-af8985cd7265" type="RoleType"/>
-	</assignment>
-	
+    <name>operator</name>
 
-	<fullName>Super Operator</fullName>
-	<givenName>Super</givenName>
-	<familyName>Operator</familyName>
-    
-	<activation>
-		<administrativeStatus>enabled</administrativeStatus>
-	</activation>
-    
-	<credentials> 
-        	<password> 
-        		<value> 
-				<clearValue>5ecr3t</clearValue>
-			</value>
-		</password>
-	</credentials>
-    
+    <assignment>
+        <!-- Superoperator -->
+        <targetRef oid="2832f29c-bbaa-11e5-ac70-af8985cd7265" type="RoleType"/>
+    </assignment>
+
+
+    <fullName>Super Operator</fullName>
+    <givenName>Super</givenName>
+    <familyName>Operator</familyName>
+
+    <activation>
+        <administrativeStatus>enabled</administrativeStatus>
+    </activation>
+
+    <credentials>
+        <password>
+            <value>
+                <clearValue>5ecr3t</clearValue>
+            </value>
+        </password>
+    </credentials>
 </user>

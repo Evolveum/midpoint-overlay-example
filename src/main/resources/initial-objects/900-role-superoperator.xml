@@ -14,9 +14,9 @@
   ~ limitations under the License.
   -->
 
-<role oid="2832f29c-bbaa-11e5-ac70-af8985cd7265" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3">
+<role oid="2832f29c-bbaa-11e5-ac70-af8985cd7265"
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3">
+
     <name>Superoperator</name>
     <authorization>
         <action>http://midpoint.evolveum.com/xml/ns/public/security/authorization-3#all</action>

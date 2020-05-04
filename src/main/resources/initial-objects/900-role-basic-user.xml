@@ -15,10 +15,8 @@
   -->
 
 <role oid="5e7e244a-bba8-11e5-be54-eb6d2b4d2d0b"
-        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:t="http://prism.evolveum.com/xml/ns/public/types-3"
-        xmlns:piracy="http://midpoint.evolveum.com/xml/ns/samples/piracy">
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3">
+
     <name>Basic User</name>
     <description>Basic user role giving essential privileges</description>
     <roleType>simple</roleType>

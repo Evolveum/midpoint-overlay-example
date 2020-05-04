@@ -15,8 +15,7 @@
   -->
 
 <org oid="258cfacc-4705-11e8-b772-874c20402410"
-        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:t="http://prism.evolveum.com/xml/ns/public/types-3">
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3">
+
     <name>Root</name>
 </org>

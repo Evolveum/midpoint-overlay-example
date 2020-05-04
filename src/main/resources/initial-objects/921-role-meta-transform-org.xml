@@ -14,46 +14,44 @@
   ~ limitations under the License.
   -->
 <role oid="3a6ec5dc-49f9-11e8-afe4-6f190d518c16"
-        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3"
-        xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/10000000-0000-0000-0000-000000000004"
-        xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-3"
-        xmlns:q="http://prism.evolveum.com/xml/ns/public/query-3">
-    <name>Transofrm Org Metarole</name>
+        xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-3">
+
+    <name>Transform Org Metarole</name>
     <inducement>
         <focusMappings>
-        	<mapping>
-        		<source>
-        			<path>fullName</path>
-        		</source>
-    			<expression>
-    				<script>
-    					<code>
-                      def transformContainer = immediateRole.asPrismObject().findExtensionItem('transform')
-                      if (transformContainer == null) {
-                        return fullName
-                      }
-                      def output = ''
-                      for (ch in basic.stringify(fullName).split('')) {
-                          for (transformValue in transformContainer.getValues()) {
+            <mapping>
+                <source>
+                    <path>fullName</path>
+                </source>
+                <expression>
+                    <script>
+                        <code>
+                            def transformContainer = immediateRole.asPrismObject().findExtensionItem('transform')
+                            if (transformContainer == null) {
+                            return fullName
+                            }
+                            def output = ''
+                            for (ch in basic.stringify(fullName).split('')) {
+                            for (transformValue in transformContainer.getValues()) {
                             def patternProperty = transformValue.findItem('pattern')
                             def pattern = patternProperty.getRealValue()
                             if (ch.equalsIgnoreCase(pattern)) {
-                                def replacementProperty = transformValue.findItem('replacement')
-                                def replacement = replacementProperty.getRealValue()
-                                log.info("  R: {} -&gt; {}", pattern, replacement)
-                                output = output + replacement + ' '
-                                break;
+                            def replacementProperty = transformValue.findItem('replacement')
+                            def replacement = replacementProperty.getRealValue()
+                            log.info(" R: {} -&gt; {}", pattern, replacement)
+                            output = output + replacement + ' '
+                            break;
                             }
-                          }
-                      }
-					  return output
-    					</code>
-    				</script>
-    			</expression>
-    			<target>
-    				<path>additionalName</path>
-    			</target>
-    		</mapping>
+                            }
+                            }
+                            return output
+                        </code>
+                    </script>
+                </expression>
+                <target>
+                    <path>additionalName</path>
+                </target>
+            </mapping>
         </focusMappings>
         <focusType>UserType</focusType>
         <order>2</order>
