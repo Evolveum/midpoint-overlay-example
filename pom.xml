@@ -91,7 +91,7 @@
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -178,7 +178,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.2.3</version>
                 <configuration>
                     <overlays>
                         <overlay>
@@ -187,6 +187,7 @@
                         </overlay>
                     </overlays>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <!-- See also excludes for repackage lower for explanations. -->
                     <packagingExcludes>
                         WEB-INF/lib/admin-gui-*-classes.jar,WEB-INF/lib/javax.annotation-api-*.jar
                     </packagingExcludes>
@@ -196,10 +197,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <skip>false</skip>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -209,10 +206,12 @@
                             <layoutFactory
                                     implementation="com.evolveum.midpoint.tools.layout.MidPointWarLayoutFactory"/>
                             <excludes>
+                                <!-- GUI is not included as JAR but as classes, just like in original WAR. -->
                                 <exclude>
                                     <groupId>com.evolveum.midpoint.gui</groupId>
                                     <artifactId>admin-gui</artifactId>
                                 </exclude>
+                                <!-- Matches packagingExcludes above, replaced by tomcat-annotations-api. -->
                                 <exclude>
                                     <groupId>javax.annotation</groupId>
                                     <artifactId>javax.annotation-api</artifactId>
