@@ -80,3 +80,16 @@ The files will be imported in the order given by the `xx` numbers.
 Custom `initial-objects` are part of the initial object import and happens before so called
 https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import] of objects
 placed under `${midpoint.home}/post-initial-objects`.
+
+[WARNING]
+====
+If you develop an overlay project containing `initial-objects` be sure to run it first
+as a JAR and not from IDE directly - especially if `${midpoint.home}` does not exist yet.
+Running it from IDE may change the order, trying to import overlay objects before essential
+midPoint objects are imported.
+
+Even if the overlay objects seem not to depend on anything, you risk running the import
+before the system configuration is read - which is very likely very undesirable.
+If `midpoint.home` is initialized already it's safe to run the overlay from IDE,
+typically even after changes to `initial-objects`.
+====
