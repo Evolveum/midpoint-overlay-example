@@ -1,4 +1,16 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toc-placement!:
+
 = midPoint Overlay Example
+
+toc::[]
 
 MidPoint overlays allow to heavily customize midPoint without the need to modify midPoint source code.
 This example serves two purposes:
@@ -56,7 +68,7 @@ There is also the custom form for editing an organization (class ``):
 
 image::doc/img/custom-form-org.png[]
 
-=== Schema extension and initial objects
+== Schema extension and initial objects
 
 This overlay demonstrates usage of both
 https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension]
