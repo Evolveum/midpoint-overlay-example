@@ -43,6 +43,8 @@ Further, *JDK 11 is now used for overlays* just as recommended for midPoint.
 
 == This overlay example
 
+=== Building and running
+
 To build this example use JDK 11 and run (in the root of the repository):
 ----
 mvn clean package
@@ -54,6 +56,13 @@ Wait until the midPoint starts - you can check the progress in another terminal 
 tail -f ~/midpoint/log/midpoint.log
 ----
 
+To run in an IDE choose `com.evolveum.midpoint.web.boot.MidPointSpringApplication` as the main class.
+Be sure to add "provided" scope to the classpath in the run configuration.
+*If `midpoint.home` does not exist run as JAR first, not IDE, otherwise `initial-objects` loading fails.*
+
+
+=== Customized forms
+
 To see the customized forms:
 
 * In your browser open: http://localhost:8080
@@ -64,44 +73,14 @@ You will see the completely customized form (implemented in `ExtendedFormFocusTa
 
 image::doc/img/custom-form-user.png[]
 
-There is also the custom form for editing an organization (class ``):
+There is also the custom form for editing an organization (class `ConfigurationTableTabPanel`):
 
 image::doc/img/custom-form-org.png[]
 
-== Schema extension and initial objects
+=== Schema extension and initial objects
 
 This overlay demonstrates usage of both
 https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension]
 and custom initial objects.
 
-For details see the respective section in link:doc/overlay-development.adoc[Overlay development].
-
-To include schema extensions, create `initial-midpoint-home/schema` under `main/java/resources`.
-The whole structure will be extracted under `${midpoint.home}/schema` and all `*.xsd` files will be processed as schema extensions.
-
-Additionally, any resource (file) placed under `initial-objects` will be parsed as object during Midpoint startup.
-Recommendations for custom initial objects are:
-
-* Place each object in a separate XML file.
-* The files have to be named following the `9xx-nnnnnnnn.xml` convention, where `xx` is any number
-and `nnnnnnnn` is object name (see the sample project for an example).
-The files will be imported in the order given by the `xx` numbers.
-* The prefix `9` is a convention to avoid collisions with stock initial objects.
-* Don't forget the OID as it is used to avoid repeated object import on each restart.
-
-Custom `initial-objects` are part of the initial object import and happens before so called
-https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import] of objects
-placed under `${midpoint.home}/post-initial-objects`.
-
-[WARNING]
-====
-If you develop an overlay project containing `initial-objects` be sure to run it first
-as a JAR and not from IDE directly - especially if `${midpoint.home}` does not exist yet.
-Running it from IDE may change the order, trying to import overlay objects before essential
-midPoint objects are imported.
-
-Even if the overlay objects seem not to depend on anything, you risk running the import
-before the system configuration is read - which is very likely very undesirable.
-If `midpoint.home` is initialized already it's safe to run the overlay from IDE,
-typically even after changes to `initial-objects`.
-====
+For details see the respective sections in link:doc/overlay-development.adoc[Overlay development].

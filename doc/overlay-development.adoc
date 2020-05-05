@@ -1,18 +1,93 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+:toc:
+:toc-placement!:
+
 = midPoint Overlay development
 
-TODO:
+toc::[]
 
-* version info table
-* IDEA development
+This document sums up the most important information about midPoint overlays in general.
+
+== Developing overlay with midPoint SNAPSHOT
+
+If you want fresh midPoint SNAPSHOTs for your overlay and published SNAPSHOTs are not enough
+(e.g. nightly built hasn't run yet, or you need to check some unpublished or branch changes)
+you need to get the SNAPSHOTs to the local repository under `~/.m2/repository`.
+
+----
+# go to updated Evolveum/midpoint clone and run fast developer build,
+# install is crucial here for publishing to local repository:
+mvn clean install -DskipTests=true -P -dist
+
+# go to your overlay project and run normal build
+mvn package
+
+# you can try to use offline build to be sure no foreign snapshots are
+# downloaded after update period (but if this fails, run without -o once)
+mvn -o package
+----
+
+== Version compatibility information
+
+This table summarizes JDK and Spring Boot version changes for main midPoint versions.
+Overlay examples are tagged for each midPoint release.
+
+[cols="1,2,2"]
+|===
+| Version | Repository | Notes
+
+| master (development) | https://github.com/Evolveum/midpoint-overlay-example | JDK 11, overlay + Spring Boot 2.1.x repackage
+| 4.1 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.1 | JDK 11, overlay + Spring Boot 2.1.8 repackage
+| 4.0.2 LTS | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.0.2 | JDK 11 (POM states 8, but use 11), overlay + Spring Boot 2.1.8
+| 3.9 | https://github.com/Evolveum/midpoint-overlay-example/tree/v3.9 | JDK 8, overlay + Spring Boot 2.0.3
+| 3.8 | https://github.com/Evolveum/midpoint-overlay-example/tree/v3.8 | JDK 8, overlay + Spring Boot 1.5.7
+| 3.7 | https://github.com/Evolveum/midpoint-overlay-example/tree/v3.7 | JDK 8, WAR overlay + Spring Boot 1.5.7
+| 3.6 | https://github.com/Evolveum/midpoint-overlay-example/tree/v3.6 | JDK 8, pure WAR overlay
+| 3.5 | https://github.com/Evolveum/midpoint-overlay-example/tree/v3.5 | JDK 8, pure WAR overlay
+|===
+
+== Overlay upgrade notes
+
+These are intended as notes for upgrading your own overlays in the future.
+Only changes for upgrade to version 4.1 and newer are documented.
+
+* Upgrade to version 4.2:
+** TODO servlet API changes
+** Annotations exclusion/replaced by Tomcat JAR
+* Upgrade to version 4.1:
+** If dependency `com.evolveum.midpoint:parent` was used, replace it with `com.evolveum.midpoint:midpoint`.
+** Replace `com.evolveum.midpoint:midpoint-war-layout` dependency in Boot plugin to `com.evolveum.midpoint.tools:midpoint-war-layout`.
+** *JDK 11 should be used for overlay building and running* which is in line with midPoint.
+
+[WARNING]
+Overlay likely contains code using various midPoint APIs or customizing GUI.
+All this code must be revised and regular midPoint release notes consulted.
+This is out of scope of these upgrade notes which are only related to overlay building and running.
+
+== MidPoint home extensions
+
+The overlay project may contain files that are copied to
+https://wiki.evolveum.com/display/midPoint/MidPoint+Home+Directory[MidPoint Home Directory] when midPoint starts.
+Just place these files in `src/main/resources/initial-midpoint-home` directory in the overlay project.
+The whole structure will be extracted under `${midpoint.home}`.
+
+This is a good tool how to bundle schema files that contain
+https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension].
+To include schema extensions, create `initial-midpoint-home/schema` under `main/java/resources`.
+This will be extracted under `${midpoint.home}/schema` and all `*.xsd` files will
+be processed as schema extensions.
+
+TODO: Does this work for ICF bundles? They have different classloading cycle, so it may.
+It probably does not work for JDBC (under `lib`) though, JARs there are probably added
+to the classpath before being extracted there.
 
 == Schema extension and initial objects
-
-Overlay can add both
-https://wiki.evolveum.com/display/midPoint/Custom+Schema+Extension[custom schema extension]
-and custom initial objects.
-
-To include schema extensions, create `initial-midpoint-home/schema` under `main/java/resources`.
-The whole structure will be extracted under `${midpoint.home}/schema` and all `*.xsd` files will be processed as schema extensions.
 
 Additionally, any resource (file) placed under `initial-objects` will be parsed as object during Midpoint startup.
 These objects are meant to be read only once, during the first startup they are discovered.
@@ -25,6 +100,37 @@ The files will be imported in the order given by the `xx` numbers.
 * The prefix `9` is a convention to avoid collisions with stock initial objects.
 * Don't forget the OID as it is used to avoid repeated object import on each restart.
 
-Custom `initial-objects` are part of the initial object import and happens before so called
-https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import] of objects
-placed under `${midpoint.home}/post-initial-objects`.
+Custom `initial-objects` are part of the initial object import.
+This is distinct from https://wiki.evolveum.com/display/midPoint/Post-initial+import[post-initial import]
+of objects placed under `${midpoint.home}/post-initial-objects` which occurs later and works differently.
+Initial objects are loaded if there is no other object with the same OID,
+but files in `post-initial-objects` are processed and their files renamed not to end with `.xml`.
+
+[WARNING]
+====
+If you develop an overlay project containing `initial-objects` be sure to run it first
+as a JAR and not from IDE directly - especially if `${midpoint.home}` does not exist yet.
+Running it from IDE may change the order, trying to import overlay objects before essential
+midPoint objects are imported.
+
+Even if the overlay objects seem not to depend on anything, you risk running the import
+before the system configuration is read - which is very likely very undesirable.
+If `midpoint.home` is initialized already it's safe to run the overlay from IDE,
+typically even after changes to `initial-objects`.
+
+This warning should be also applied to midPoint home extensions using `initial-midpoint-home`.
+====
+
+== IDE development
+
+Developing overlay in IDE is not much different from an ordinary project.
+If Maven project is imported properly, everything should be resolved and no compilation errors found.
+Occasionally, if sources are generated, the directory with them must be manually added to the project, typically just once.
+No special Maven profile is needed for IDE development.
+
+To run the overlay in an IDE, just run `com.evolveum.midpoint.web.boot.MidPointSpringApplication` directly.
+IDE should allow you to add "provided" scope to the classpath in the run configuration,
+e.g. checkbox *Include dependencies with "Provided" scope* in IDE run configuration must be enabled.
+Otherwise, some Java EE API classes will be reported as not found/undefined during the start.
+
+When developing overlays with custom initial objects, see also the warning in the section above.
