@@ -38,7 +38,7 @@ mvn -o package
 This table summarizes JDK and Spring Boot version changes for main midPoint versions.
 Overlay examples are tagged for each midPoint release.
 
-[cols="1,2,2"]
+[cols="1,3,2"]
 |===
 | Version | Repository | Notes
 
@@ -87,7 +87,7 @@ TODO: Does this work for ICF bundles? They have different classloading cycle, so
 It probably does not work for JDBC (under `lib`) though, JARs there are probably added
 to the classpath before being extracted there.
 
-== Schema extension and initial objects
+== Custom initial objects
 
 Additionally, any resource (file) placed under `initial-objects` will be parsed as object during Midpoint startup.
 These objects are meant to be read only once, during the first startup they are discovered.
