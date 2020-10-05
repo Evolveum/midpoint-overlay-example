@@ -66,7 +66,7 @@ Be sure to add "provided" scope to the classpath in the run configuration.
 To see the customized forms:
 
 * In your browser open: http://localhost:8080
-* Log in as user `operator` with password `5ecr3t`.
+* Log in as user `operator` with the password `5ecr3t`.
 * Try to edit any user or just click http://localhost:8080/midpoint/self/profile/user[Profile].
 
 You will see the completely customized form (implemented in `ExtendedFormFocusTabPanel`):

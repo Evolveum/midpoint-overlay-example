@@ -33,7 +33,8 @@
         <project.source.version>${java.version}</project.source.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
+        <!-- Make this match the Boot version used by midPoint main project -->
+        <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
 
         <midpoint.version>4.2-SNAPSHOT</midpoint.version>
     </properties>
@@ -52,7 +53,7 @@
                 <!-- Import dependency management from Spring Boot -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -196,15 +197,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
+                <version>${spring-boot.version}</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
-                            <layoutFactory
-                                    implementation="com.evolveum.midpoint.tools.layout.MidPointWarLayoutFactory"/>
                             <excludes>
                                 <!-- GUI is not included as JAR but as classes, just like in original WAR. -->
                                 <exclude>
@@ -220,13 +219,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.evolveum.midpoint.tools</groupId>
-                        <artifactId>midpoint-war-layout</artifactId>
-                        <version>${midpoint.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

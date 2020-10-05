@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2016-2018 Evolveum
- * <p>
+ * Copyright (C) 2016-2020 Evolveum
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,14 +31,14 @@ import org.apache.wicket.model.PropertyModel;
 
 import com.evolveum.midpoint.gui.api.factory.GuiComponentFactory;
 import com.evolveum.midpoint.gui.api.model.LoadableModel;
-import com.evolveum.midpoint.gui.api.prism.PrismContainerWrapper;
-import com.evolveum.midpoint.gui.api.prism.PrismObjectWrapper;
-import com.evolveum.midpoint.gui.api.prism.ShadowWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.PrismContainerValueWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.PrismContainerWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.PrismObjectWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.ShadowWrapper;
 import com.evolveum.midpoint.gui.api.util.WebPrismUtil;
-import com.evolveum.midpoint.gui.impl.factory.ItemRealValueModel;
-import com.evolveum.midpoint.gui.impl.factory.PrismPropertyPanelContext;
-import com.evolveum.midpoint.gui.impl.prism.PrismContainerValueWrapper;
-import com.evolveum.midpoint.gui.impl.prism.PrismPropertyValueWrapper;
+import com.evolveum.midpoint.gui.impl.factory.panel.ItemRealValueModel;
+import com.evolveum.midpoint.gui.impl.factory.panel.PrismPropertyPanelContext;
+import com.evolveum.midpoint.gui.impl.prism.wrapper.PrismPropertyValueWrapper;
 import com.evolveum.midpoint.prism.Containerable;
 import com.evolveum.midpoint.prism.path.ItemName;
 import com.evolveum.midpoint.prism.path.ItemPath;
@@ -47,7 +47,7 @@ import com.evolveum.midpoint.util.exception.SchemaException;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import com.evolveum.midpoint.web.component.form.Form;
+import com.evolveum.midpoint.web.component.form.MidpointForm;
 import com.evolveum.midpoint.web.component.message.FeedbackAlerts;
 import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.model.PrismContainerWrapperModel;
@@ -74,7 +74,7 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
 
     private static final transient Trace LOGGER = TraceManager.getTrace(ConfigurationTableTabPanel.class);
 
-    public ConfigurationTableTabPanel(String id, Form<PrismObjectWrapper<F>> mainForm,
+    public ConfigurationTableTabPanel(String id, MidpointForm<PrismObjectWrapper<F>> mainForm,
             LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
             LoadableModel<List<ShadowWrapper>> projectionModel) {
         super(id, mainForm, focusWrapperModel, projectionModel);
@@ -102,9 +102,12 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
         this.add(checkbox);
 
         // Following code sets up a table of pattern/replacement transforms
-        PrismContainerWrapperModel<?, ?> transformWrapperModel = PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
+        PrismContainerWrapperModel<?, ?> transformWrapperModel =
+                PrismContainerWrapperModel.fromContainerWrapper(
+                        getObjectWrapperModel(), ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM);
 
-        final ListView<PrismContainerValueWrapper<Containerable>> table = new ListView<PrismContainerValueWrapper<Containerable>>(ID_TRANSFORM_TABLE_ROW, new PropertyModel<>(transformWrapperModel, "values")) {
+        ListView<PrismContainerValueWrapper<Containerable>> table = new ListView<>(
+                ID_TRANSFORM_TABLE_ROW, new PropertyModel<>(transformWrapperModel, "values")) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -114,14 +117,16 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
                 feedback.setOutputMarkupId(true);
                 item.add(feedback);
 
-                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_PATTERN, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_PATTERN));
-                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_REPLACEMENT, item.getModel(), ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_REPLACEMENT));
+                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_PATTERN, item.getModel(),
+                        ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_PATTERN));
+                item.add(createTransformTableItem(ID_TRANSFORM_TABLE_REPLACEMENT, item.getModel(),
+                        ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_REPLACEMENT));
             }
 
         };
         add(table);
 
-        AjaxLink<PrismObjectWrapper<F>> addButton = new AjaxLink<PrismObjectWrapper<F>>(ID_ADD_TRANSFORM, getObjectWrapperModel()) {
+        AjaxLink<PrismObjectWrapper<F>> addButton = new AjaxLink<>(ID_ADD_TRANSFORM, getObjectWrapperModel()) {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
@@ -149,7 +154,7 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
         PrismPropertyWrapperModel<Containerable, ?> propertyModel =
                 PrismPropertyWrapperModel.fromContainerValueWrapper(
                         itemModel, ItemName.fromQName(tableElementQName));
-        GuiComponentFactory valuePanelFactory =
+        GuiComponentFactory<PrismPropertyPanelContext<?>> valuePanelFactory =
                 getPageBase().getRegistry().findValuePanelFactory(propertyModel.getObject());
         if (valuePanelFactory == null) {
             return new Label(id, createStringResource("Cannot create component for " + tableElementQName));

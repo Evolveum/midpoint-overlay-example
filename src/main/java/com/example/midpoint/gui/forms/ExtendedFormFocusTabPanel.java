@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2016-2018 Evolveum
- * <p>
+ * Copyright (C) 2016-2020 Evolveum
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,8 +23,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 
 import com.evolveum.midpoint.gui.api.model.LoadableModel;
-import com.evolveum.midpoint.gui.api.prism.PrismObjectWrapper;
-import com.evolveum.midpoint.gui.api.prism.ShadowWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.PrismObjectWrapper;
+import com.evolveum.midpoint.gui.api.prism.wrapper.ShadowWrapper;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.prism.query.ObjectQuery;
@@ -34,13 +34,10 @@ import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import com.evolveum.midpoint.web.component.assignment.SimpleRoleSelector;
-import com.evolveum.midpoint.web.component.form.Form;
+import com.evolveum.midpoint.web.component.form.MidpointForm;
 import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.model.PrismContainerWrapperModel;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.FocusType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.RoleType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.UserType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.*;
 import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
 
 /**
@@ -62,11 +59,10 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
     private static final String ID_PROP_SSN = "propSsn";
 
     private static final String ID_ROLES_SIMPLE = "rolesSimple";
-    private static final String ID_ROLES_DOMAIN = "rolesDomain";
 
     private static final Trace LOGGER = TraceManager.getTrace(ExtendedFormFocusTabPanel.class);
 
-    public ExtendedFormFocusTabPanel(String id, Form mainForm,
+    public ExtendedFormFocusTabPanel(String id, MidpointForm<PrismObjectWrapper<F>> mainForm,
             LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
             LoadableModel<List<ShadowWrapper>> projectionModel) {
         super(id, mainForm, focusWrapperModel, projectionModel);
@@ -101,8 +97,9 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
             // TODO: better errror reporting
         }
 
-        PrismContainerWrapperModel assignmentsModel = PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), FocusType.F_ASSIGNMENT);
+        PrismContainerWrapperModel<F, AssignmentType> assignmentsModel =
+                PrismContainerWrapperModel.fromContainerWrapper(getObjectWrapperModel(), FocusType.F_ASSIGNMENT);
 
-        add(new SimpleRoleSelector<F, RoleType>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
+        add(new SimpleRoleSelector<>(ID_ROLES_SIMPLE, assignmentsModel, availableSimpleRoles));
     }
 }
