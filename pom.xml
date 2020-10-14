@@ -185,7 +185,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <!-- See also excludes for repackage lower for explanations. -->
                     <packagingExcludes>
-                        WEB-INF/lib/admin-gui-*-classes.jar,WEB-INF/lib/javax.annotation-api-*.jar
+                        WEB-INF/lib/admin-gui-*-classes.jar
                     </packagingExcludes>
                 </configuration>
             </plugin>
