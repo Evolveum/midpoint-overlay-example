@@ -121,6 +121,27 @@ typically even after changes to `initial-objects`.
 This warning should be also applied to midPoint home extensions using `initial-midpoint-home`.
 ====
 
+=== Default initial object override
+
+Some scenarios require override of initial objects coming from midPoint.
+One typical example is the modification of the default security policy.
+This is technically possible, but extreme care must be taken during upgrades of midPoint.
+Alternatives to the initial objects override is initial-object task that amends objects as necessary.
+In many cases this is more difficult than the default initial object override.
+
+To override default midPoint initial object:
+
+* First check the list of existing initial objects, e.g. in the WAR
+or https://github.com/Evolveum/midpoint/tree/master/config/initial-objects[on GitHub] (don't forget to choose the right branch).
+* Find the file with the object you want to modify, e.g. `015-security-policy.xml`.
+* If upgrading, check the object for any changes from previous midPoint versions.
+* Copy the file *under the same name* into your overlay `initial-objects` directory.
+This is essential, because the same object (with the same OID) in alphabetically later file is ignored.
+* Modify the object file as necessary.
+
+As an example of this approach you can check https://github.com/Evolveum/midpoint-custom-service[Custom SOAP service]
+where default security policy is overridden.
+
 == IDE development
 
 Developing overlay in IDE is not much different from an ordinary project.
