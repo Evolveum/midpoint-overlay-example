@@ -45,6 +45,9 @@ with the versions stated there if it is available.
 * SOAP is gone as are some CXF dependencies.
 It may be necessary to specify versions for CXF dependencies if used in overlay.
 CXF servlet must be configured in the overlay now, see https://github.com/Evolveum/midpoint-custom-service[Custom SOAP service] for example.
+* Usage of *midpoint-war-layout* is obsolete now.
+See https://github.com/Evolveum/midpoint/blob/master/dist/src/main/bin/midpoint.sh[midpoint.sh]
+for details how `${midpoint.home}/lib` is included to classpath (search for `-Dloader.path`).
 * Various package name changes in Prism and GUI, changes in `import` statements are required.
 * Custom Wicket `Form` in midPoint was renamed to `MidpointForm` to avoid name clashes.
 * See also https://wiki.evolveum.com/x/5gDpAg[Release notes for midPoint 4.2].
