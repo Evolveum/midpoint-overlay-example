@@ -24,10 +24,14 @@ Following generic overlay points are documented in separate documents in this pr
 
 * link:doc/overlay-development.adoc[Overlay development]
 
-Other overlay examples:
+Other overlay examples managed by Evolveum:
 
-* https://github.com/Evolveum/midpoint-custom-service[Custom SOAP service]
+* https://github.com/Evolveum/midpoint-custom-soap-service-wsdl[Custom SOAP service]
+with contract-first (WSDL) approach and WS-Security authentication (based on CXF).
+* https://github.com/Evolveum/midpoint-custom-soap-service[Custom SOAP service]
+with code-first approach only using midPoint built-in basic authentication (based on CXF).
 * https://github.com/Evolveum/midpoint-custom-rest-service[Custom REST service]
+with CXF-based REST and (since 4.2) experimentally also simplified Spring MVC based REST endpoint.
 
 Additional information about midPoint customizations with overlays are also available at
 https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[this documentation page].
@@ -44,7 +48,7 @@ It is recommended to use dependencies from https://docs.spring.io/spring-boot/do
 with the versions stated there if it is available.
 * SOAP is gone as are some CXF dependencies.
 It may be necessary to specify versions for CXF dependencies if used in overlay.
-CXF servlet must be configured in the overlay now, see https://github.com/Evolveum/midpoint-custom-service[Custom SOAP service] for example.
+CXF servlet must be configured in the overlay now, see https://github.com/Evolveum/midpoint-custom-soap-service-wsdl[Custom SOAP service] for example.
 * Usage of *midpoint-war-layout* is obsolete now.
 See https://github.com/Evolveum/midpoint/blob/master/dist/src/main/bin/midpoint.sh[midpoint.sh]
 for details how `${midpoint.home}/lib` is included to classpath (search for `-Dloader.path`).
