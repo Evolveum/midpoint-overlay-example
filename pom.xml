@@ -22,21 +22,21 @@
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.2</version>
+    <version>4.3-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project</description>
 
     <properties>
+        <midpoint.version>4.3-SNAPSHOT</midpoint.version>
+
         <java.version>11</java.version>
         <project.source.version>${java.version}</project.source.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Make this match the Boot version used by midPoint main project -->
         <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
-
-        <midpoint.version>4.2</midpoint.version>
     </properties>
 
     <dependencyManagement>
