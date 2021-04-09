@@ -22,14 +22,14 @@
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.3</version>
+    <version>4.4-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project</description>
 
     <properties>
-        <midpoint.version>4.3</midpoint.version>
+        <midpoint.version>4.4-SNAPSHOT</midpoint.version>
 
         <java.version>11</java.version>
         <project.source.version>${java.version}</project.source.version>
