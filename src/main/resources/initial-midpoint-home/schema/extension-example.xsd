@@ -36,17 +36,6 @@
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:complexType name="RoleExtensionType">
-        <xsd:annotation>
-            <xsd:appinfo>
-                <a:extension ref="c:RoleType"/>
-            </xsd:appinfo>
-        </xsd:annotation>
-        <xsd:sequence>
-            
-        </xsd:sequence>
-    </xsd:complexType>
-    
     <xsd:complexType name="OrgExtensionType">
         <xsd:annotation>
             <xsd:appinfo>
@@ -65,7 +54,7 @@
             </xsd:element>
         </xsd:sequence>
     </xsd:complexType>
-    
+
     <xsd:complexType name="TransformConfigType">
         <xsd:annotation>
             <xsd:appinfo>
