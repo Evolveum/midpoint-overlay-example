@@ -18,6 +18,13 @@ package com.example.midpoint.gui.forms;
 import java.util.List;
 import javax.xml.namespace.QName;
 
+import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
+
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
+
+import com.evolveum.midpoint.web.application.PanelType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.ContainerPanelConfigurationType;
+
 import com.example.midpoint.schema.ExampleSchemaConstants;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -60,7 +67,8 @@ import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
  *
  * @author Radovan Semancik
  */
-public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFocusTabPanel<F> {
+@PanelType(name = "configurableOptionsTable")
+public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
     private static final long serialVersionUID = 1L;
 
     private static final String ID_TRANSFORM_DESCRIPTION = "transformDescription";
@@ -74,19 +82,11 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
 
     private static final transient Trace LOGGER = TraceManager.getTrace(ConfigurationTableTabPanel.class);
 
-    public ConfigurationTableTabPanel(String id, MidpointForm<PrismObjectWrapper<F>> mainForm,
-            LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
-            LoadableModel<List<ShadowWrapper>> projectionModel) {
-        super(id, mainForm, focusWrapperModel, projectionModel);
+    public ConfigurationTableTabPanel(String id, FocusDetailsModels<F> model, ContainerPanelConfigurationType config) {
+        super(id, model, config);
     }
 
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
-        initLayout();
-    }
-
-    private void initLayout() {
+    protected void initLayout() {
         setOutputMarkupId(true);
 
         // This is absolutely ordinary field. MidPoint GUI code will choose appropriate input for the field.
@@ -151,6 +151,7 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
 
     private Component createTransformTableItem(String id,
             IModel<PrismContainerValueWrapper<Containerable>> itemModel, QName tableElementQName) {
+
         PrismPropertyWrapperModel<Containerable, ?> propertyModel =
                 PrismPropertyWrapperModel.fromContainerValueWrapper(
                         itemModel, ItemName.fromQName(tableElementQName));
@@ -162,7 +163,7 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractFoc
 
         PrismPropertyPanelContext<?> ctx = new PrismPropertyPanelContext<>(propertyModel);
         ctx.setComponentId(id);
-        ctx.setForm(getMainForm());
+//        ctx.setForm(getMainForm());
         ctx.setParentComponent(this);
         ctx.setRealValueModel(new PropertyModel<>(propertyModel, "value"));
         return valuePanelFactory.createPanel(ctx);

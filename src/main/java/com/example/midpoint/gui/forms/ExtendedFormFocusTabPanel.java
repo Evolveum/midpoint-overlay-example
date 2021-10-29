@@ -18,6 +18,12 @@ package com.example.midpoint.gui.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
+
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
+
+import com.evolveum.midpoint.web.application.PanelType;
+
 import com.example.midpoint.schema.ExampleSchemaConstants;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -46,7 +52,8 @@ import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
  *
  * @author Radovan Semancik
  */
-public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocusTabPanel<F> {
+@PanelType(name = "extendedFormPanel")
+public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
     private static final long serialVersionUID = 1L;
 
     private static final String DOT_CLASS = ExtendedFormFocusTabPanel.class.getName() + ".";
@@ -62,19 +69,11 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
 
     private static final Trace LOGGER = TraceManager.getTrace(ExtendedFormFocusTabPanel.class);
 
-    public ExtendedFormFocusTabPanel(String id, MidpointForm<PrismObjectWrapper<F>> mainForm,
-            LoadableModel<PrismObjectWrapper<F>> focusWrapperModel,
-            LoadableModel<List<ShadowWrapper>> projectionModel) {
-        super(id, mainForm, focusWrapperModel, projectionModel);
+    public ExtendedFormFocusTabPanel(String id, FocusDetailsModels<F> model, ContainerPanelConfigurationType config) {
+        super(id, model, config);
     }
 
-    @Override
-    protected void onInitialize() {
-        super.onInitialize();
-        initLayout();
-    }
-
-    private void initLayout() {
+    protected void initLayout() {
         add(new Label(ID_HEADER, "Object details"));
         WebMarkupContainer body = new WebMarkupContainer("body");
         add(body);
@@ -87,7 +86,7 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractFocu
         Task task = getPageBase().createSimpleTask(OPERATION_SEARCH_ROLES);
         List<PrismObject<RoleType>> availableSimpleRoles;
         try {
-            ObjectQuery simpleRoleQuery = getPageBase().getPrismContext().queryFor(RoleType.class).item(RoleType.F_ROLE_TYPE).eq(ExampleSchemaConstants.ROLE_TYPE_SIMPLE).build();
+            ObjectQuery simpleRoleQuery = getPageBase().getPrismContext().queryFor(RoleType.class).item(RoleType.F_SUBTYPE).eq(ExampleSchemaConstants.ROLE_TYPE_SIMPLE).build();
 
             availableSimpleRoles = getPageBase().getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
         } catch (Throwable e) {
