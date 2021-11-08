@@ -21,6 +21,7 @@
     <authorization>
         <action>http://midpoint.evolveum.com/xml/ns/public/security/authorization-3#all</action>
     </authorization>
+    <!-- See: https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/ -->
     <adminGuiConfiguration>
         <objectDetails>
             <objectDetailsPage>
@@ -132,6 +133,14 @@
                 </panel>
                 <panel>
                     <identifier>applicablePolicies</identifier>
+                    <visibility>hidden</visibility>
+                </panel>
+                <panel>
+                    <identifier>orgMembers</identifier>
+                    <visibility>hidden</visibility>
+                </panel>
+                <panel>
+                    <identifier>orgGovernance</identifier>
                     <visibility>hidden</visibility>
                 </panel>
                 <panel>
