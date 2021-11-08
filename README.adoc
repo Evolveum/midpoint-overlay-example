@@ -41,9 +41,18 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.4:
+
+* Spring Boot version 2.5.2 is used.
+* Both Java 11 and 17 can be used for building and running midPoint and midPoint overlays.
+* https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#object-details[Admin GUI configuration] was changed significantly.
+* Spring Boot repackage now again uses custom `layoutFactory` based on `midpoint-boot-layout` (see link:pom.xml[the POM file]).
+This encapsulates implementation details around setting the `midpoint.home` and loading custom libraries from `${midpoint.home}/lib`.
+* See also https://docs.evolveum.com/midpoint/release/4.4/[Release notes for midPoint 4.4].
+
 Changes for midPoint 4.3:
 
-* Spring Boot in version 2.4.3 is used.
+* Spring Boot version 2.4.3 is used.
 It is recommended to use dependencies from https://docs.spring.io/spring-boot/docs/2.4.3/reference/html/appendix-dependency-versions.html[this list]
 with the versions stated there if it is available.
 * MidPoint module `midpoint-war-layout` is gone (it was unused in 4.2 already),
@@ -52,7 +61,7 @@ simply remove any references to it.
 
 Changes for midPoint 4.2:
 
-* Spring Boot in version 2.3.3 is used.
+* Spring Boot version 2.3.3 is used.
 It is recommended to use dependencies from https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/reference/html/appendix-dependency-versions.html[this list]
 with the versions stated there if it is available.
 * SOAP is gone as are some CXF dependencies.
@@ -90,8 +99,6 @@ tail -f ~/midpoint/log/midpoint.log
 
 To run in an IDE choose `com.evolveum.midpoint.web.boot.MidPointSpringApplication` as the main class.
 Be sure to add "provided" scope to the classpath in the run configuration.
-*If `midpoint.home` does not exist run as JAR first, not IDE, otherwise `initial-objects` loading fails.*
-
 
 === Customized forms
 
