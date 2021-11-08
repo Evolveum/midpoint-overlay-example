@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2016-2020 Evolveum
+  ~ Copyright (C) 2016-2021 Evolveum
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -199,6 +199,7 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
+                            <layoutFactory implementation="com.evolveum.midpoint.tools.layout.MidPointWarLayoutFactory"/>
                             <excludes>
                                 <!-- GUI is not included as JAR but as classes, just like in original WAR. -->
                                 <exclude>
@@ -214,6 +215,13 @@
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.evolveum.midpoint.tools</groupId>
+                        <artifactId>midpoint-boot-layout</artifactId>
+                        <version>${midpoint.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
