@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2020 Evolveum
+ * Copyright (C) 2016-2021 Evolveum
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,12 @@ package com.example.midpoint.gui.forms;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
-
-import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
-
-import com.evolveum.midpoint.web.application.PanelType;
-
 import com.example.midpoint.schema.ExampleSchemaConstants;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 
-import com.evolveum.midpoint.gui.api.model.LoadableModel;
-import com.evolveum.midpoint.gui.api.prism.wrapper.PrismObjectWrapper;
-import com.evolveum.midpoint.gui.api.prism.wrapper.ShadowWrapper;
+import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.prism.query.ObjectQuery;
@@ -39,9 +32,8 @@ import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import com.evolveum.midpoint.web.application.PanelType;
 import com.evolveum.midpoint.web.component.assignment.SimpleRoleSelector;
-import com.evolveum.midpoint.web.component.form.MidpointForm;
-import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.model.PrismContainerWrapperModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.*;
 import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
@@ -53,7 +45,9 @@ import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
  * @author Radovan Semancik
  */
 @PanelType(name = "extendedFormPanel")
-public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
+public class ExtendedFormFocusTabPanel<F extends FocusType>
+        extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
+
     private static final long serialVersionUID = 1L;
 
     private static final String DOT_CLASS = ExtendedFormFocusTabPanel.class.getName() + ".";
@@ -80,20 +74,25 @@ public class ExtendedFormFocusTabPanel<F extends FocusType> extends AbstractObje
 
         addPrismPropertyPanel(body, ID_PROP_NAME, PolyStringType.COMPLEX_TYPE, FocusType.F_NAME);
         addPrismPropertyPanel(body, ID_PROP_FULL_NAME, PolyStringType.COMPLEX_TYPE, UserType.F_FULL_NAME);
-        addPrismPropertyPanel(body, ID_PROP_SSN, DOMUtil.XSD_STRING, ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_SSN));
+        addPrismPropertyPanel(body, ID_PROP_SSN, DOMUtil.XSD_STRING,
+                ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_SSN));
 
         // TODO: create proxy for these operations
         Task task = getPageBase().createSimpleTask(OPERATION_SEARCH_ROLES);
         List<PrismObject<RoleType>> availableSimpleRoles;
         try {
-            ObjectQuery simpleRoleQuery = getPageBase().getPrismContext().queryFor(RoleType.class).item(RoleType.F_SUBTYPE).eq(ExampleSchemaConstants.ROLE_TYPE_SIMPLE).build();
+            ObjectQuery simpleRoleQuery = getPageBase().getPrismContext()
+                    .queryFor(RoleType.class)
+                    .item(RoleType.F_SUBTYPE).eq(ExampleSchemaConstants.ROLE_TYPE_SIMPLE)
+                    .build();
 
-            availableSimpleRoles = getPageBase().getModelService().searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
+            availableSimpleRoles = getPageBase().getModelService()
+                    .searchObjects(RoleType.class, simpleRoleQuery, null, task, task.getResult());
         } catch (Throwable e) {
             task.getResult().recordFatalError(e);
             LoggingUtils.logException(LOGGER, "Couldn't load roles", e);
             availableSimpleRoles = new ArrayList<>();
-            // TODO: better errror reporting
+            // TODO: better error reporting
         }
 
         PrismContainerWrapperModel<F, AssignmentType> assignmentsModel =

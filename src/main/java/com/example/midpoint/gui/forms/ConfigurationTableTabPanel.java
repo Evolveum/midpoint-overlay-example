@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2020 Evolveum
+ * Copyright (C) 2016-2021 Evolveum
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,7 @@
  */
 package com.example.midpoint.gui.forms;
 
-import java.util.List;
 import javax.xml.namespace.QName;
-
-import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
-
-import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
-
-import com.evolveum.midpoint.web.application.PanelType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.ContainerPanelConfigurationType;
 
 import com.example.midpoint.schema.ExampleSchemaConstants;
 import org.apache.wicket.Component;
@@ -37,14 +29,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import com.evolveum.midpoint.gui.api.factory.GuiComponentFactory;
-import com.evolveum.midpoint.gui.api.model.LoadableModel;
 import com.evolveum.midpoint.gui.api.prism.wrapper.PrismContainerValueWrapper;
 import com.evolveum.midpoint.gui.api.prism.wrapper.PrismContainerWrapper;
 import com.evolveum.midpoint.gui.api.prism.wrapper.PrismObjectWrapper;
-import com.evolveum.midpoint.gui.api.prism.wrapper.ShadowWrapper;
 import com.evolveum.midpoint.gui.api.util.WebPrismUtil;
 import com.evolveum.midpoint.gui.impl.factory.panel.ItemRealValueModel;
 import com.evolveum.midpoint.gui.impl.factory.panel.PrismPropertyPanelContext;
+import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
 import com.evolveum.midpoint.gui.impl.prism.wrapper.PrismPropertyValueWrapper;
 import com.evolveum.midpoint.prism.Containerable;
 import com.evolveum.midpoint.prism.path.ItemName;
@@ -54,11 +46,11 @@ import com.evolveum.midpoint.util.exception.SchemaException;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import com.evolveum.midpoint.web.component.form.MidpointForm;
+import com.evolveum.midpoint.web.application.PanelType;
 import com.evolveum.midpoint.web.component.message.FeedbackAlerts;
-import com.evolveum.midpoint.web.component.objectdetails.AbstractFocusTabPanel;
 import com.evolveum.midpoint.web.model.PrismContainerWrapperModel;
 import com.evolveum.midpoint.web.model.PrismPropertyWrapperModel;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.ContainerPanelConfigurationType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.FocusType;
 import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
 
@@ -68,7 +60,9 @@ import com.evolveum.midpoint.xml.ns._public.common.common_3.ObjectType;
  * @author Radovan Semancik
  */
 @PanelType(name = "configurableOptionsTable")
-public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
+public class ConfigurationTableTabPanel<F extends FocusType>
+        extends AbstractObjectMainPanel<F, FocusDetailsModels<F>> {
+
     private static final long serialVersionUID = 1L;
 
     private static final String ID_TRANSFORM_DESCRIPTION = "transformDescription";
@@ -93,10 +87,13 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractObj
         addPrismPropertyPanel(this, ID_TRANSFORM_DESCRIPTION, DOMUtil.XSD_STRING,
                 ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORM_DESCRIPTION));
 
-        // This is is an example of using custom Wicket component to handle a property.
-        PrismPropertyWrapperModel<F, Boolean> transformationEnabledPropertyWrapperModel = PrismPropertyWrapperModel.fromContainerWrapper(getObjectWrapperModel(), ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORMATION_ENABLED));
+        // This is an example of using custom Wicket component to handle a property.
+        PrismPropertyWrapperModel<F, Boolean> transformationEnabledPropertyWrapperModel =
+                PrismPropertyWrapperModel.fromContainerWrapper(getObjectWrapperModel(),
+                        ItemPath.create(ObjectType.F_EXTENSION, ExampleSchemaConstants.SCHEMA_EXTENSION_TRANSFORMATION_ENABLED));
 
-        IModel<PrismPropertyValueWrapper<Boolean>> transformationEnabledPropertyValueWrapperModel = new PropertyModel<>(transformationEnabledPropertyWrapperModel, "value");
+        IModel<PrismPropertyValueWrapper<Boolean>> transformationEnabledPropertyValueWrapperModel =
+                new PropertyModel<>(transformationEnabledPropertyWrapperModel, "value");
         ItemRealValueModel<Boolean> checkboxModel = new ItemRealValueModel<>(transformationEnabledPropertyValueWrapperModel);
         CheckBox checkbox = new CheckBox(ID_TRANSFORMATION_ENABLED, checkboxModel);
         this.add(checkbox);
@@ -138,7 +135,8 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractObj
                     WebPrismUtil.createNewValueWrapper(
                             transformWrapper, transformWrapper.getItem().createNewValue(), getPageBase(), target);
                 } catch (SchemaException e) {
-                    LoggingUtils.logException(LOGGER, "Cannot find container " + ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM + " in " + getObjectWrapper(), e);
+                    LoggingUtils.logException(LOGGER,
+                            "Cannot find container " + ExampleSchemaConstants.PATH_EXTENSION_TRANSFORM + " in " + getObjectWrapper(), e);
                     target.add(ConfigurationTableTabPanel.this);
                     return;
                 }
@@ -163,7 +161,6 @@ public class ConfigurationTableTabPanel<F extends FocusType> extends AbstractObj
 
         PrismPropertyPanelContext<?> ctx = new PrismPropertyPanelContext<>(propertyModel);
         ctx.setComponentId(id);
-//        ctx.setForm(getMainForm());
         ctx.setParentComponent(this);
         ctx.setRealValueModel(new PropertyModel<>(propertyModel, "value"));
         return valuePanelFactory.createPanel(ctx);
