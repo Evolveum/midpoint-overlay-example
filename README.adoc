@@ -41,6 +41,13 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.4.2:
+
+* Scanning for GUI components is now more focused and overlays using custom GUI components (like
+those annotated `@PanelType` in this project) need to tell midPoint what other packages to scan.
+See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#customizing-classpath-scanning[Customizing classpath scanning]
+in Admin GUI Configuration guide for more information.
+
 Changes for midPoint 4.4:
 
 * Spring Boot version 2.5.2 is used.

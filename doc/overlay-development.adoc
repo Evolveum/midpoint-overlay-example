@@ -63,6 +63,13 @@ Only changes for upgrade to version 4.1 and newer are documented.
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in the main README as well
 
+Changes for midPoint 4.4.2:
+
+* Scanning for GUI components is now more focused and overlays using custom GUI components (like
+those annotated `@PanelType` in this project) need to tell midPoint what other packages to scan.
+See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#customizing-classpath-scanning[Customizing classpath scanning]
+in Admin GUI Configuration guide for more information.
+
 Changes for midPoint 4.4:
 
 * Spring Boot version 2.5.2 is used.
