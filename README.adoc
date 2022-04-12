@@ -41,6 +41,20 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.5:
+
+* Scanning for GUI components is now more focused and overlays using custom GUI components (like
+those annotated `@PanelType` in this project) need to tell midPoint what other packages to scan.
+See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#customizing-classpath-scanning[Customizing classpath scanning]
+in Admin GUI Configuration guide for more information.
+* For other changes see https://docs.evolveum.com/midpoint/release/4.5/[Release notes for midPoint 4.5].
+
+// TODO after 4.4.2 release
+//Changes for midPoint 4.4.2:
+//
+//* More focused GUI component scanning was introduced in 4.4.2 as well, see the note in 4.5.
+//This change was incorporated into support-4.4 branch of this overlay example.
+
 Changes for midPoint 4.4:
 
 * Spring Boot version 2.5.2 is used.
@@ -87,12 +101,14 @@ Further, *JDK 11 is now used for overlays* just as recommended for midPoint.
 === Building and running
 
 To build this example use JDK 11 and run (in the root of the repository):
+
 ----
 mvn clean package
 java -jar target/midpoint.war
 ----
 
 Wait until the midPoint starts - you can check the progress in another terminal with:
+
 ----
 tail -f ~/midpoint/log/midpoint.log
 ----
@@ -100,7 +116,7 @@ tail -f ~/midpoint/log/midpoint.log
 To run in an IDE choose `com.evolveum.midpoint.web.boot.MidPointSpringApplication` as the main class.
 Be sure to add "provided" scope to the classpath in the run configuration.
 
-=== Customized forms
+=== Customized GUI forms
 
 To see the customized forms:
 
@@ -115,6 +131,13 @@ image::doc/img/custom-form-user.png[]
 There is also the custom form for editing an organization (class `ConfigurationTableTabPanel`):
 
 image::doc/img/custom-form-org.png[]
+
+Read https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/[Admin GUI Configuration]
+guide for more information about GUI customization.
+Notice also `src/main/resources/application-default.yml` file that configures additional packages
+for GUI component scanning which is necessary since versions 4.5 (and 4.4.2 for LTS version).
+See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#customizing-classpath-scanning[Customizing classpath scanning]
+in Admin GUI Configuration guide for more information.
 
 === Schema extension and initial objects
 
