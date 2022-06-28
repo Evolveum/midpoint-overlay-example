@@ -41,6 +41,11 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.6:
+
+* Overlay was overhauled to support JAR packaging instead of WAR packaging, that is not available anymore.
+//* See also https://docs.evolveum.com/midpoint/release/4.6/[Release notes for midPoint 4.6].
+
 Changes for midPoint 4.5:
 
 * Scanning for GUI components is now more focused and overlays using custom GUI components (like
@@ -49,11 +54,10 @@ See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#cus
 in Admin GUI Configuration guide for more information.
 * For other changes see https://docs.evolveum.com/midpoint/release/4.5/[Release notes for midPoint 4.5].
 
-// TODO after 4.4.2 release
-//Changes for midPoint 4.4.2:
-//
-//* More focused GUI component scanning was introduced in 4.4.2 as well, see the note in 4.5.
-//This change was incorporated into support-4.4 branch of this overlay example.
+Changes for midPoint 4.4.2:
+
+* More focused GUI component scanning was introduced in 4.4.2 as well, see the note in 4.5.
+This change was incorporated into support-4.4 branch of this overlay example.
 
 Changes for midPoint 4.4:
 
@@ -64,37 +68,7 @@ Changes for midPoint 4.4:
 This encapsulates implementation details around setting the `midpoint.home` and loading custom libraries from `${midpoint.home}/lib`.
 * See also https://docs.evolveum.com/midpoint/release/4.4/[Release notes for midPoint 4.4].
 
-Changes for midPoint 4.3:
-
-* Spring Boot version 2.4.3 is used.
-It is recommended to use dependencies from https://docs.spring.io/spring-boot/docs/2.4.3/reference/html/appendix-dependency-versions.html[this list]
-with the versions stated there if it is available.
-* MidPoint module `midpoint-war-layout` is gone (it was unused in 4.2 already),
-simply remove any references to it.
-* See also https://docs.evolveum.com/midpoint/release/4.3/[Release notes for midPoint 4.3].
-
-Changes for midPoint 4.2:
-
-* Spring Boot version 2.3.3 is used.
-It is recommended to use dependencies from https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/reference/html/appendix-dependency-versions.html[this list]
-with the versions stated there if it is available.
-* SOAP is gone as are some CXF dependencies.
-It may be necessary to specify versions for CXF dependencies if used in overlay.
-CXF servlet must be configured in the overlay now, see https://github.com/Evolveum/midpoint-custom-soap-service-wsdl[Custom SOAP service] for example.
-* Usage of *midpoint-war-layout* is obsolete now.
-See https://github.com/Evolveum/midpoint/blob/master/dist/src/main/bin/midpoint.sh[midpoint.sh]
-for details how `${midpoint.home}/lib` is included to classpath (search for `-Dloader.path`).
-* Various package name changes in Prism and GUI, changes in `import` statements are required.
-* Custom Wicket `Form` in midPoint was renamed to `MidpointForm` to avoid name clashes.
-* See also https://wiki.evolveum.com/x/5gDpAg[Release notes for midPoint 4.2].
-
-During development of midPoint 4.1, following Maven artifact coordinates were changed:
-
-* Parent POM `com.evolveum.midpoint:parent` was removed and replaced by `com.evolveum.midpoint:midpoint`.
-* `com.evolveum.midpoint:midpoint-war-layout` was changed to `com.evolveum.midpoint.tools:midpoint-war-layout`.
-* See also https://wiki.evolveum.com/display/midPoint/Release+4.1[Release notes for midPoint 4.1].
-
-Further, *JDK 11 is now used for overlays* just as recommended for midPoint.
+Since 4.6, *JDK 17 is now used for overlays* just as recommended for midPoint.
 
 == This overlay example
 
@@ -104,7 +78,7 @@ To build this example use JDK 11 and run (in the root of the repository):
 
 ----
 mvn clean package
-java -jar target/midpoint.war
+java -jar target/midpoint.jar
 ----
 
 Wait until the midPoint starts - you can check the progress in another terminal with:

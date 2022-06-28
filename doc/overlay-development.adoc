@@ -42,7 +42,8 @@ Overlay examples are tagged for each midPoint release.
 |===
 | Version | Repository | Notes
 
-| master (development) | https://github.com/Evolveum/midpoint-overlay-example | JDK 11/17, overlay + Spring Boot 2.5+ repackage
+| master (development) | https://github.com/Evolveum/midpoint-overlay-example | JDK 17, Spring Boot 2.7.0 repackage, JAR
+//| 4.6 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.6 | JDK 17, Spring Boot 2.7.1 repackage, JAR
 | 4.5 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.5 | JDK 11/17, overlay + Spring Boot 2.5.2 repackage
 | 4.4 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.4 | JDK 11/17, overlay + Spring Boot 2.5.2 repackage
 | 4.3 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.3 | JDK 11, overlay + Spring Boot 2.4.3 repackage
@@ -64,6 +65,11 @@ Only changes for upgrade to version 4.1 and newer are documented.
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in the main README as well
 
+Changes for midPoint 4.6:
+
+* Overlay was overhauled to support JAR packaging instead of WAR packaging, that is not available anymore.
+//* See also https://docs.evolveum.com/midpoint/release/4.6/[Release notes for midPoint 4.6].
+
 Changes for midPoint 4.5:
 
 * Scanning for GUI components is now more focused and overlays using custom GUI components (like
@@ -71,6 +77,11 @@ those annotated `@PanelType` in this project) need to tell midPoint what other p
 See https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/#customizing-classpath-scanning[Customizing classpath scanning]
 in Admin GUI Configuration guide for more information.
 * For other changes see https://docs.evolveum.com/midpoint/release/4.5/[Release notes for midPoint 4.5].
+
+Changes for midPoint 4.4.2:
+
+* More focused GUI component scanning was introduced in 4.4.2 as well, see the note in 4.5.
+This change was incorporated into support-4.4 branch of this overlay example.
 
 Changes for midPoint 4.4:
 

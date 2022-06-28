@@ -20,37 +20,63 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>gui</artifactId>
-        <groupId>com.evolveum.midpoint.gui</groupId>
-        <version>4.6-SNAPSHOT</version>
-    </parent>
+    <!--
+    This is no parent alternative to pom.xml example.
+    To build the overlay with this POM, use:
+    mvn clean package -f pom-no-parent.xml
+
+    Couple of things are different, some things (versions, plugins, deps) must be declared that
+    work "automatically" when parent POM is used.
+    On the other hand there is no need to disable dependency analyze or checkstyle if not wanted.
+    -->
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
     <version>4.6-SNAPSHOT</version>
 
     <name>midPoint Overlay Project</name>
-    <description>Example midPoint overlay project</description>
+    <description>Example midPoint overlay project - no parent</description>
 
     <properties>
-        <!-- Checkstyle file is not available in overlay, let's just disable it. -->
-        <checkstyle.skip>true</checkstyle.skip>
-        <mdep.analyze.skip>true</mdep.analyze.skip>
+        <midpoint.version>${project.version}</midpoint.version>
+
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Make this match the Boot version used by midPoint main project -->
+        <spring-boot.version>2.7.0</spring-boot.version>
 
         <!-- No tests here, but midPoint parent would try to run some, we need to disable it. -->
         <maven.test.skip>true</maven.test.skip>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from MidPoint -->
+                <groupId>com.evolveum.midpoint</groupId>
+                <artifactId>midpoint</artifactId>
+                <version>${midpoint.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <!--
-        In midpoint-jar this is in runtime scope, because there are no sources,
-        but here we have our custom GUI classes, so we need it in default (compile) scope.
-        -->
         <dependency>
             <groupId>com.evolveum.midpoint.gui</groupId>
             <artifactId>admin-gui</artifactId>
-            <version>${project.version}</version>
+            <version>${midpoint.version}</version>
         </dependency>
     </dependencies>
 
@@ -94,6 +120,7 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.9.10</version>
                 <executions>
                     <execution>
                         <goals>
@@ -107,12 +134,31 @@
                 </configuration>
             </plugin>
             <!--
-            gitdescribe-maven-plugin that initializes ${git.describe} works automatically because of the parent POM.
+            Initializes ${git.describe} - can be skipped if it's not used in overlay banner.
+            About in midPoint will still use the right information from metadata inside system-init.jar.
             -->
+            <plugin>
+                <groupId>com.lukegb.mojo</groupId>
+                <artifactId>gitdescribe-maven-plugin</artifactId>
+                <version>3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>gitdescribe</goal>
+                        </goals>
+                        <id>git-describe</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <outputPrefix></outputPrefix>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.evolveum.midpoint.web.boot.MidPointSpringApplication</mainClass>
                 </configuration>
