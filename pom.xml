@@ -22,7 +22,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.4.3-SNAPSHOT</version>
+    <version>4.4.4-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>midPoint Overlay Project</name>
@@ -36,7 +36,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Make this match the Boot version used by midPoint main project -->
-        <spring-boot.version>2.5.2</spring-boot.version>
+        <spring-boot.version>2.5.14</spring-boot.version>
     </properties>
 
     <dependencyManagement>
