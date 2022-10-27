@@ -43,8 +43,9 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 
 Changes for midPoint 4.6:
 
+* Spring Boot version 2.7.3 is used.
 * Overlay was overhauled to support JAR packaging instead of WAR packaging, that is not available anymore.
-//* See also https://docs.evolveum.com/midpoint/release/4.6/[Release notes for midPoint 4.6].
+* See also https://docs.evolveum.com/midpoint/release/4.6/[Release notes for midPoint 4.6].
 
 Changes for midPoint 4.5:
 
