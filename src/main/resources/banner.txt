@@ -1,9 +1,0 @@
-
-
--- .. -.. .--. --- .. -. -   --- ..- . .-. .-.. .- -.--   . -..- .- -- .--. .-.. .
-midPoint Overlay Example by Evolveum and partners
-Licensed under Apache License 2.0
-
-Version: ${project.version}, build: ${git.describe} (branch ${git.branch})
-Sources: https://github.com/Evolveum/midpoint-overlay-example
-Product information: https://midpoint.evolveum.com
