@@ -23,6 +23,8 @@ import com.evolveum.midpoint.gui.api.util.GuiDisplayTypeUtil;
 import com.evolveum.midpoint.gui.api.util.WebComponentUtil;
 import com.evolveum.midpoint.gui.api.util.WebModelServiceUtils;
 import com.evolveum.midpoint.gui.impl.page.admin.AbstractPageObjectDetails;
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.AssignmentHolderDetailsModel;
+import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.PageAssignmentHolderDetails;
 import com.evolveum.midpoint.gui.impl.page.admin.cases.PageCase;
 import com.evolveum.midpoint.gui.impl.page.admin.systemconfiguration.PageSystemConfiguration;
 import com.evolveum.midpoint.gui.impl.page.admin.systemconfiguration.page.PageBaseSystemConfiguration;
@@ -75,14 +77,7 @@ import com.evolveum.midpoint.web.page.admin.workflow.PageAttorneySelection;
 import com.evolveum.midpoint.web.page.admin.workflow.PageWorkItemsAttorney;
 import com.evolveum.midpoint.web.page.self.PageSelfConsents;
 import com.evolveum.midpoint.web.security.MidPointApplication;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.CaseWorkItemType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.DeploymentInformationType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.DisplayType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.IconType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.OperationTypeType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.OtherPrivilegesLimitationType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.RichHyperlinkType;
-import com.evolveum.midpoint.xml.ns._public.common.common_3.UserType;
+import com.evolveum.midpoint.xml.ns._public.common.common_3.*;
 import com.evolveum.prism.xml.ns._public.types_3.PolyStringType;
 
 import java.util.*;
@@ -542,17 +537,41 @@ public class LeftMenuPanel extends BasePanel<Void> {
         }
     }
 
-    private void createFocusPageNewEditMenu(MainMenuItem mainMenuItem, String newKey, String editKey, Class<? extends PageBase> newPageClass) {
-        boolean addActive = this.classMatches(newPageClass) && !this.isEditForAdminObjectDetails();
-        MenuItem newMenu = new MenuItem(newKey, "fa fa-plus-circle", newPageClass, (PageParameters)null, addActive);
-        mainMenuItem.addMenuItem(newMenu);
-        boolean editActive = this.classMatches(newPageClass) && this.isEditForAdminObjectDetails();
+    private void createFocusPageEditMenu(
+            MainMenuItem mainMenuItem, String editKey, Class<? extends PageBase> newPageClass, CompiledObjectCollectionView view) {
+        boolean editActive = this.classMatches(newPageClass) && this.isEditForAdminObjectDetails() && isEditActive(view);
         if (editActive) {
             MenuItem edit = new MenuItem(editKey, newPageClass);
             edit.setDynamic(true);
             mainMenuItem.addMenuItem(edit);
         }
+    }
 
+    private void createFocusPageNewEditMenu(
+            MainMenuItem mainMenuItem, String newKey, String editKey, Class<? extends PageBase> newPageClass) {
+        boolean addActive = this.classMatches(newPageClass) && !this.isEditForAdminObjectDetails();
+        MenuItem newMenu = new MenuItem(newKey, "fa fa-plus-circle", newPageClass, (PageParameters)null, addActive);
+        mainMenuItem.addMenuItem(newMenu);
+        createFocusPageEditMenu(mainMenuItem, editKey, newPageClass, null);
+    }
+
+    private boolean isEditActive(CompiledObjectCollectionView objectView) {
+        PageBase pageBase = this.getPageBase();
+        if (pageBase instanceof PageAssignmentHolderDetails) {
+            PageAssignmentHolderDetails<? extends AssignmentHolderType, ? extends AssignmentHolderDetailsModel<? extends AssignmentHolderType>> page =
+                    (PageAssignmentHolderDetails)pageBase;
+            AssignmentHolderType object = page.getObjectDetailsModels().getObjectType();
+            CompiledObjectCollectionView view = WebComponentUtil.getCollectionViewByObject(object, page);
+            if (view == null) {
+                return true;
+            }
+            if (objectView == null || objectView.getViewIdentifier() == null) {
+                return !view.isTopLevelView();
+            } else {
+                return view.isTopLevelView() && objectView.getViewIdentifier().equals(view.getViewIdentifier());
+            }
+        }
+        return true;
     }
 
     private boolean classMatches(Class<? extends PageBase> page) {
@@ -623,7 +642,13 @@ public class LeftMenuPanel extends BasePanel<Void> {
                 OperationTypeType operationTypeType = objectView.getApplicableForOperation();
                 if (operationTypeType == null || operationTypeType == OperationTypeType.MODIFY) {
                     if (!objectView.isDefaultView() && objectView.isTopLevelView()) {
-                        menu.addMainMenuItem(createMenuItemForCollection(objectView, pageDesc.getListClass(), MainMenuItem.class));
+                        MainMenuItem mainMenu = createMenuItemForCollection(objectView, pageDesc.getListClass(), MainMenuItem.class);
+                        String editLabel =
+                                createStringResource("pageUser.title.editUser").getString()
+                                        + " "
+                                        + mainMenu.getNameModel();
+                        createFocusPageEditMenu(mainMenu, editLabel, pageDesc.getDetailsPage(), objectView);
+                        menu.addMainMenuItem(mainMenu);
                     }
                 }
             }
