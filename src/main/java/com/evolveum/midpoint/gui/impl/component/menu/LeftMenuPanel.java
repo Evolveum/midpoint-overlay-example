@@ -651,7 +651,7 @@ public class LeftMenuPanel extends BasePanel<Void> {
                     redirectToPage,
                     pageParameters) {
                 @Override
-                public boolean hasActiveSubmenu(WebPage page) {
+                public boolean isMenuActive(WebPage page) {
                     return isObjectCollectionMenuActive(objectView);
                 }
             };
