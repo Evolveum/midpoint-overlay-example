@@ -43,6 +43,7 @@ Overlay examples are tagged for each midPoint release.
 | Version | Repository | Notes
 
 | master (development) | https://github.com/Evolveum/midpoint-overlay-example | JDK 11/17, Spring Boot 2.7.3 repackage, JAR
+| 4.7 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.7 | JDK 11/17, Spring Boot 2.7.3 repackage, JAR
 | 4.6 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.6 | JDK 11/17, Spring Boot 2.7.3 repackage, JAR
 | 4.5 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.5 | JDK 11/17, overlay + Spring Boot 2.5.2 repackage
 | 4.4 | https://github.com/Evolveum/midpoint-overlay-example/tree/v4.4 | JDK 11/17, overlay + Spring Boot 2.5.2 repackage +
@@ -65,6 +66,10 @@ Only changes for upgrade to version 4.1 and newer are documented.
 
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in the main README as well
+
+Changes for midPoint 4.7:
+
+* None.
 
 Changes for midPoint 4.6:
 

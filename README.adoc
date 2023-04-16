@@ -41,6 +41,10 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.7:
+
+* None.
+
 Changes for midPoint 4.6:
 
 * Spring Boot version 2.7.3 is used.

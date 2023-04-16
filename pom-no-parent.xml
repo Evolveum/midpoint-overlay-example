@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2016-2022 Evolveum
+  ~ Copyright (C) 2016-2023 Evolveum
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.7-SNAPSHOT</version>
+    <version>4.7</version>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project - no parent</description>
