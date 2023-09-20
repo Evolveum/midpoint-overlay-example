@@ -17,6 +17,8 @@ package com.example.midpoint.gui.forms;
 
 import javax.xml.namespace.QName;
 
+import com.evolveum.midpoint.gui.impl.page.admin.focus.FocusDetailsModels;
+
 import com.example.midpoint.schema.ExampleSchemaConstants;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -36,7 +38,6 @@ import com.evolveum.midpoint.gui.api.util.WebPrismUtil;
 import com.evolveum.midpoint.gui.impl.factory.panel.ItemRealValueModel;
 import com.evolveum.midpoint.gui.impl.factory.panel.PrismPropertyPanelContext;
 import com.evolveum.midpoint.gui.impl.page.admin.AbstractObjectMainPanel;
-import com.evolveum.midpoint.gui.impl.page.admin.assignmentholder.FocusDetailsModels;
 import com.evolveum.midpoint.gui.impl.prism.wrapper.PrismPropertyValueWrapper;
 import com.evolveum.midpoint.prism.Containerable;
 import com.evolveum.midpoint.prism.path.ItemName;
@@ -154,7 +155,7 @@ public class ConfigurationTableTabPanel<F extends FocusType>
                 PrismPropertyWrapperModel.fromContainerValueWrapper(
                         itemModel, ItemName.fromQName(tableElementQName));
         GuiComponentFactory<PrismPropertyPanelContext<?>> valuePanelFactory =
-                getPageBase().getRegistry().findValuePanelFactory(propertyModel.getObject());
+                getPageBase().getRegistry().findValuePanelFactory(propertyModel.getObject(), propertyModel.getObject().getParent());
         if (valuePanelFactory == null) {
             return new Label(id, createStringResource("Cannot create component for " + tableElementQName));
         }
