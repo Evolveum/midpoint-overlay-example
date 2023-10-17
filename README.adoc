@@ -41,6 +41,10 @@ https://wiki.evolveum.com/display/midPoint/Customization+With+Overlay+Project[th
 // Make include from this section when GitHub will support asciidoc includes
 // Use it here and in overlay-development.adoc
 
+Changes for midPoint 4.8:
+
+* Adding `selfProfilePage` to admin gui configuration of `900-role-superoperator.xml`.
+
 Changes for midPoint 4.7:
 
 * None.

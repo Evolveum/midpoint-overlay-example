@@ -23,6 +23,71 @@
     </authorization>
     <!-- See: https://docs.evolveum.com/midpoint/reference/admin-gui/admin-gui-config/ -->
     <adminGuiConfiguration>
+        <selfProfilePage>
+        <type>UserType</type>
+            <panel>
+                <identifier>basic</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>projections</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>focusCases</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>history</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>focusTriggers</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>personas</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>userDelegations</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>delegatedToMe</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>password</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>activation</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>assignments</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>igaAccesses</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>applications</identifier>
+                <visibility>hidden</visibility>
+            </panel>
+            <panel>
+                <identifier>role-selector</identifier>
+                <panelType>extendedFormPanel</panelType>
+                <display>
+                    <label>Custom role selector</label>
+                    <icon>
+                        <cssClass>fe fe-role</cssClass>
+                    </icon>
+                </display>
+            </panel>
+        </selfProfilePage>
         <objectDetails>
             <objectDetailsPage>
                 <type>UserType</type>
@@ -68,6 +133,14 @@
                 </panel>
                 <panel>
                     <identifier>assignments</identifier>
+                    <visibility>hidden</visibility>
+                </panel>
+                <panel>
+                    <identifier>igaAccesses</identifier>
+                    <visibility>hidden</visibility>
+                </panel>
+                <panel>
+                    <identifier>applications</identifier>
                     <visibility>hidden</visibility>
                 </panel>
                 <panel>
@@ -141,6 +214,10 @@
                 </panel>
                 <panel>
                     <identifier>orgGovernance</identifier>
+                    <visibility>hidden</visibility>
+                </panel>
+                <panel>
+                    <identifier>inducedBy</identifier>
                     <visibility>hidden</visibility>
                 </panel>
                 <panel>
