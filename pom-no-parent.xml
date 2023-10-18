@@ -38,7 +38,7 @@
     <description>Example midPoint overlay project - no parent</description>
 
     <properties>
-        <midpoint.version>${project.version}</midpoint.version>
+        <midpoint.version>4.8</midpoint.version>
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

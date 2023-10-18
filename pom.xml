@@ -23,12 +23,12 @@
     <parent>
         <artifactId>midpoint</artifactId>
         <groupId>com.evolveum.midpoint</groupId>
-        <version>4.8-SNAPSHOT</version>
+        <version>4.8</version>
     </parent>
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.8-SNAPSHOT</version>
+    <version>4.8</version>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project</description>
@@ -40,6 +40,7 @@
 
         <!-- No tests here, but midPoint parent would try to run some, we need to disable it. -->
         <maven.test.skip>true</maven.test.skip>
+        <midpoint.version>4.8</midpoint.version>
     </properties>
 
     <dependencies>
@@ -50,7 +51,7 @@
         <dependency>
             <groupId>com.evolveum.midpoint.gui</groupId>
             <artifactId>admin-gui</artifactId>
-            <version>${project.version}</version>
+            <version>${midpoint.version}</version>
         </dependency>
     </dependencies>
 
@@ -155,7 +156,7 @@
                     <dependency>
                         <groupId>com.evolveum.midpoint.tools</groupId>
                         <artifactId>midpoint-boot-layout</artifactId>
-                        <version>${project.version}</version>
+                        <version>${midpoint.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
