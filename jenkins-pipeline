@@ -58,6 +58,21 @@ podTemplate(
                             df -h
                         fi
                     """
+
+                    // If we get here it's success, test results can change it to UNSTABLE.
+                    currentBuild.result = 'SUCCESS'
+
+                    // Collects results for all tests
+                    // Using this step in each phase produces multiple graphs, but all have the same results from the last run.
+                    step([$class: 'Publisher',
+                        reportFilenamePattern: '**/testng-results.xml',
+                        failureOnFailedTestConfig: true // TODO we don't want failure, but how can we make it unstable?
+                    ])
+
+                    if (currentBuild.result == 'UNSTABLE' || currentBuild.result == 'FAILURE' || params.ARCHIVE_LOGS) {
+                        sh "find . -wholename '*/target/test.log' -print0 | tar -czf test-logs.tgz --null -T -"
+	                    archiveArtifacts allowEmptyArchive: true, artifacts: "test-logs.tgz", followSymlinks: false
+                    }
                 }
             }
         } catch (Exception e) {
