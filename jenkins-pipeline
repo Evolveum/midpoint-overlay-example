@@ -37,7 +37,7 @@ podTemplate(
         try {
             stage("checkout") {
                 git branch: params.BRANCH ?: 'master',
-                        url: 'https://github.com/Evolveum/midpoint.git'
+                        url: 'https://github.com/Evolveum/midpoint-overlay-example'
             }
             stage("build") {
                 container('maven') {
