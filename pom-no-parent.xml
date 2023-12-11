@@ -38,14 +38,16 @@
     <description>Example midPoint overlay project - no parent</description>
 
     <properties>
-        <midpoint.version>4.8</midpoint.version>
+        <java.version>17</java.version>
 
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <midpoint.version>4.8</midpoint.version>
+
         <!-- Make this match the Boot version used by midPoint main project -->
-        <spring-boot.version>2.7.3</spring-boot.version>
+        <spring-boot.version>3.0.10</spring-boot.version>
 
         <!-- No tests here, but midPoint parent would try to run some, we need to disable it. -->
         <maven.test.skip>true</maven.test.skip>
