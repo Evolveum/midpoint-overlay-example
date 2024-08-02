@@ -1,6 +1,6 @@
 
 
--- .. -.. .--. --- .. -. -   --- ..- . .-. .-.. .- -.--   . -..- .- -- .--. .-.. .
+-- .. -.. .--. --- .. -. -   --- ...- . .-. .-.. .- -.--   . -..- .- -- .--. .-.. .
 midPoint Overlay Example by Evolveum and partners
 Licensed under Apache License 2.0
 
