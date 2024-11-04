@@ -23,12 +23,12 @@
     <parent>
         <artifactId>midpoint</artifactId>
         <groupId>com.evolveum.midpoint</groupId>
-        <version>4.9</version>
+        <version>4.10-SNAPSHOT</version>
     </parent>
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.9</version>
+    <version>4.10-SNAPSHOT</version>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project</description>
@@ -40,7 +40,7 @@
 
         <!-- No tests here, but midPoint parent would try to run some, we need to disable it. -->
         <maven.test.skip>true</maven.test.skip>
-        <midpoint.version>4.9</midpoint.version>
+        <midpoint.version>4.10-SNAPSHOT</midpoint.version>
     </properties>
 
     <dependencies>

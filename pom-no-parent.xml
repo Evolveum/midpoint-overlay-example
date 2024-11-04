@@ -32,7 +32,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>midpoint-overlay-example</artifactId>
-    <version>4.9</version>
+    <version>4.10-SNAPSHOT</version>
 
     <name>midPoint Overlay Project</name>
     <description>Example midPoint overlay project - no parent</description>
@@ -44,7 +44,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <midpoint.version>4.9</midpoint.version>
+        <midpoint.version>4.10-SNAPSHOT</midpoint.version>
 
         <!-- Make this match the Boot version used by midPoint main project -->
         <spring-boot.version>3.3.2</spring-boot.version>
