@@ -40,7 +40,7 @@
 
         <!-- No tests here, but midPoint parent would try to run some, we need to disable it. -->
         <maven.test.skip>true</maven.test.skip>
-        <midpoint.version>4.8.11-SNAPSHOT</midpoint.version>
+        <midpoint.version>4.8.12-SNAPSHOT</midpoint.version>
     </properties>
 
     <dependencies>
