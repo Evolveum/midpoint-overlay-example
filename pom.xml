@@ -160,6 +160,52 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>sbom</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.cyclonedx</groupId>
+                        <artifactId>cyclonedx-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sbom-package</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>makeBom</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>dependencytrack</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.github.pmckeown</groupId>
+                        <artifactId>dependency-track-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>upload-bom</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>upload-bom</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
