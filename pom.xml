@@ -183,6 +183,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <projectType>application</projectType>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
